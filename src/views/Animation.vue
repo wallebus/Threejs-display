@@ -43,8 +43,10 @@ window.addEventListener("resize", () => {
   // console.log(aspect);
   // aspect = Size.width / Size.height;
   camera.aspect = Size.width / Size.height;
-  camera.updateProjectionMatrix;
+  camera.updateProjectionMatrix();
   renderer.setSize(Size.width, Size.height);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 3))
+
 });
 
 renderer.setSize(Size.width, Size.height);
@@ -122,4 +124,6 @@ tick();
 // tick();
 </script>
 
-<style></style>
+<style>
+
+</style>

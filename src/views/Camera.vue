@@ -103,6 +103,7 @@ function changeAspect() {
   orthoGraphic.right = 3 * aspect;
   camera.updateProjectionMatrix();
   renderer.setSize(Size.width, Size.height);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 }
 watch(Size, changeAspect);
 
@@ -129,9 +130,11 @@ tick();
   justify-content: center;
   align-items: center;
 }
+
 label {
   margin: 8px;
 }
+
 h3 {
   color: aqua;
 }

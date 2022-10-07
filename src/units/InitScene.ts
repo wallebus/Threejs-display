@@ -65,6 +65,7 @@ export function initScene() {
       Size.height = window.innerHeight * 0.8;
       // console.log(aspect);
     });
+
     watch(Size, () => {
       aspect = Size.width / Size.height;
       perSpective.aspect = aspect;
@@ -76,8 +77,25 @@ export function initScene() {
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     });
   };
+  let doubleClick = () =>
+    window.addEventListener("dblclick", () => {
+      // webkit 适配Safari
+      const FullScreen =
+        document.fullscreenElement || document.webkitFullscreenElement;
+
+      if (!FullScreen) {
+        canvas.requestFullscreen
+          ? canvas.requestFullscreen()
+          : canvas.webkitRequestFullscreen();
+      } else {
+        document.exitFullscreen
+          ? document.exitFullscreen()
+          : document.webkitExitFullscreen();
+      }
+    });
   onMounted(() => {
     resize();
+    doubleClick();
   });
 
   const initScene = {
