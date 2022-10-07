@@ -14,6 +14,8 @@ import { RouterLink, RouterView } from "vue-router";
         <RouterLink to="/transform">transform</RouterLink>
         <RouterLink to="/animation">animation</RouterLink>
         <RouterLink to="/camera">camera</RouterLink>
+        <RouterLink to="/test">test</RouterLink>
+
       </nav>
     </div>
   </header>
@@ -27,9 +29,11 @@ import { RouterLink, RouterView } from "vue-router";
   padding: 2rem;
   font-weight: normal;
 }
+
 nav {
   margin: 10px 0;
 }
+
 a,
 .green {
   text-decoration: none;

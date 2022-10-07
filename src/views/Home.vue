@@ -1,7 +1,7 @@
 <template>
   <h1>HELLO THREE-JS</h1>
 </template>
-<script lang="ts"></script>
+<!-- <script lang="ts"></script> -->
 <style scoped>
 h1 {
   text-align: center;

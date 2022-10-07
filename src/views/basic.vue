@@ -9,12 +9,10 @@ import {
   Mesh,
   MeshBasicMaterial,
   PerspectiveCamera,
-  Quaternion,
   Scene,
-  Vector3,
   WebGLRenderer,
 } from "three";
-import { CreateCanvas } from "../unlits/CreateCanvs";
+import { CreateCanvas } from "../units/CreateCanvas";
 const scene = new Scene();
 
 // if (document.querySelector("canvas") === null) {
@@ -22,8 +20,8 @@ const canvas = CreateCanvas();
 // const canvas = document.querySelector("canvas") as HTMLElement;
 
 const Size = {
-  width: canvas.clientWidth,
-  height: canvas.clientHeight,
+  width: window.innerWidth * 0.8,
+  height: window.innerHeight * 0.8,
 };
 
 const camera = new PerspectiveCamera(75, Size.width / Size.height, 0.1, 20);
@@ -32,19 +30,41 @@ const camera = new PerspectiveCamera(75, Size.width / Size.height, 0.1, 20);
 const geometry = new BoxGeometry(2, 2, 2);
 const material = new MeshBasicMaterial({ color: new Color("red") });
 const cube = new Mesh(geometry, material);
+cube.rotation.set(1, 0, 1);
+// cube.position.set()
 
 const renderer = new WebGLRenderer({ canvas: canvas });
 
 // 距离归一化
 // console.log(cube.position.normalize());
+window.addEventListener("resize", () => {
+  Size.width = window.innerWidth * 0.8;
+  Size.height = window.innerHeight * 0.8;
+  // console.log(aspect);
+  // aspect = Size.width / Size.height;
+  camera.aspect = Size.width / Size.height;
+  camera.updateProjectionMatrix();
+  renderer.setSize(Size.width, Size.height);
+});
 
 renderer.setSize(Size.width, Size.height);
-camera.position.z = 5;
 
+camera.position.set(0, 5, 2);
+camera.lookAt(cube.position);
+
+// const axesHelp = new AxesHelper(2);
 // cube.quaternion.set()
-scene.add(cube, camera);
+const tick = () => {
+  scene.add(cube, camera);
+  // cube.rotation.y = clock.getElapsedTime();
+  renderer.render(scene, camera);
 
-renderer.render(scene, camera);
+  requestAnimationFrame(tick);
+};
+tick();
+
 </script>
 
-<style></style>
+<style>
+
+</style>

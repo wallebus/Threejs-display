@@ -5,6 +5,7 @@
     <label for="">orthoGraphic</label>
     <input type="radio" name="camera" :value="1" v-model="checked" />
   </div>
+  <h3>Touch and mousemove will rotate the cube</h3>
 </template>
 
 <script lang="ts" setup>
@@ -12,6 +13,7 @@
 import {
   AxesHelper,
   BoxGeometry,
+  Camera,
   Clock,
   Color,
   Mesh,
@@ -23,18 +25,19 @@ import {
   Vector3,
   WebGLRenderer,
 } from "three";
-import { reactive, ref } from "vue";
-import { CreateCanvas } from "../unlits/CreateCanvs";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+import { reactive, ref, render, watch } from "vue";
+import { CreateCanvas } from "../units/CreateCanvas";
 const scene = new Scene();
 
 // if (document.querySelector("canvas") === null) {
 const canvas = CreateCanvas();
 // const canvas = document.querySelector("canvas") as HTMLElement;
 
-const Size = {
-  width: canvas.clientWidth,
-  height: canvas.clientHeight,
-};
+const Size = reactive({
+  width: window.innerWidth * 0.8,
+  height: window.innerHeight * 0.8,
+});
 
 // camera.position.set(2, 2, 2);
 
@@ -46,9 +49,8 @@ const renderer = new WebGLRenderer({ canvas: canvas });
 
 renderer.setSize(Size.width, Size.height);
 
-const aspect = Size.width / Size.height;
+let aspect = Size.width / Size.height;
 const perSpective = new PerspectiveCamera(75, aspect, 0.1, 20);
-
 // 正交投影 通过定义四个锥面确定可视空间
 const orthoGraphic = new OrthographicCamera(
   -3 * aspect,
@@ -58,21 +60,62 @@ const orthoGraphic = new OrthographicCamera(
   0.1,
   100
 );
-const Cameras = [perSpective, orthoGraphic];
-let checked = ref(0);
 
-const clock = new Clock();
-const tick = () => {
-  const camera = Cameras[checked.value];
-  // console.log(camera);
-  camera.position.set(3, 3, 3);
+// const cursor = {
+//   x: 0,
+//   y: 0,
+// };
+// // 鼠标事件
+// window.addEventListener("mousemove", (e) => {
+//   // console.log(e.clientX, e.clientY);
+//   cursor.x = e.clientX / Size.width - 0.5;
+//   cursor.y = e.clientY / Size.height - 0.5;
+//   console.log(cursor);
+// });
+
+// 副作用函数
+const Cameras = [perSpective, orthoGraphic];
+let camera: PerspectiveCamera | OrthographicCamera;
+let controls: OrbitControls;
+
+function cameraChange() {
+  camera = Cameras[checked.value];
+  camera.position.z = 5;
   camera.lookAt(cube.position);
 
+  controls = new OrbitControls(camera, canvas);
+  controls.enableDamping = true;
+}
+// 绑定checkbox
+let checked = ref(0);
+watch(checked, cameraChange, { immediate: true });
+
+window.addEventListener("resize", () => {
+  Size.width = window.innerWidth * 0.8;
+  Size.height = window.innerHeight * 0.8;
+  // console.log(aspect);
+});
+
+function changeAspect() {
+  aspect = Size.width / Size.height;
+  perSpective.aspect = aspect;
+  orthoGraphic.left = -3 * aspect;
+  orthoGraphic.right = 3 * aspect;
+  camera.updateProjectionMatrix();
+  renderer.setSize(Size.width, Size.height);
+}
+watch(Size, changeAspect);
+
+const tick = () => {
+  // console.log(camera);
+  // camera.position.set(cursor.x, cursor.y, 3);
+  // camera.position.x = cursor.x * 5;
+  // camera.position.y = cursor.y * 5;
+  controls.update();
+  // camera.updateMatrixWorld();
   // cube.quaternion.set()
   scene.add(cube, camera);
-
-  cube.rotation.y = clock.getElapsedTime();
-
+  // cube.rotation.y = clock.getElapsedTime();
   renderer.render(scene, camera);
 
   requestAnimationFrame(tick);
@@ -88,5 +131,8 @@ tick();
 }
 label {
   margin: 8px;
+}
+h3 {
+  color: aqua;
 }
 </style>

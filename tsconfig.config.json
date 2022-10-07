@@ -4,8 +4,9 @@
   "compilerOptions": {
     "composite": true,
     // "resolveJsonModule": false,
+
     "types": ["node"],
     "moduleResolution": "Node",
-    "jsx":"preserve"
+    "jsx": "preserve"
   }
 }

@@ -10,12 +10,10 @@ import {
   Mesh,
   MeshBasicMaterial,
   PerspectiveCamera,
-  Quaternion,
   Scene,
-  Vector3,
   WebGLRenderer,
 } from "three";
-import { CreateCanvas } from "../unlits/CreateCanvs";
+import { CreateCanvas } from "../units/CreateCanvas";
 import gsap from "gsap";
 const scene = new Scene();
 
@@ -24,8 +22,8 @@ const canvas = CreateCanvas();
 // const canvas = document.querySelector("canvas") as HTMLElement;
 
 const Size = {
-  width: canvas.clientWidth,
-  height: canvas.clientHeight,
+  width: window.innerWidth * 0.8,
+  height: window.innerHeight * 0.8,
 };
 
 const camera = new PerspectiveCamera(75, Size.width / Size.height, 0.1, 20);
@@ -39,14 +37,23 @@ const renderer = new WebGLRenderer({ canvas: canvas });
 
 // 距离归一化
 // console.log(cube.position.normalize());
+window.addEventListener("resize", () => {
+  Size.width = window.innerWidth * 0.8;
+  Size.height = window.innerHeight * 0.8;
+  // console.log(aspect);
+  // aspect = Size.width / Size.height;
+  camera.aspect = Size.width / Size.height;
+  camera.updateProjectionMatrix;
+  renderer.setSize(Size.width, Size.height);
+});
 
 renderer.setSize(Size.width, Size.height);
 camera.position.z = 5;
 
 // AxesHelper(length:number)
-const axesHelper = new AxesHelper(3);
+// const axesHelper = new AxesHelper(3);
 // cube.quaternion.set()
-scene.add(cube, camera, axesHelper);
+scene.add(cube, camera);
 
 // Animation
 // 一帧执行一次该函数（帧率根据电脑刷新率有关）
@@ -91,11 +98,12 @@ scene.add(cube, camera, axesHelper);
 const clock = new Clock();
 const tick = () => {
   const elapsedTime = clock.getElapsedTime();
-  camera.position.y = Math.cos(elapsedTime) * 4;
+  camera.position.y = Math.cos(elapsedTime) * 5;
   camera.position.x = Math.sin(elapsedTime) * 4;
   camera.lookAt(cube.position);
   renderer.render(scene, camera);
   requestAnimationFrame(tick);
+  // camera.updateProjectionMatrix;
 };
 tick();
 
