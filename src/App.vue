@@ -14,7 +14,8 @@ import { RouterLink, RouterView } from "vue-router";
         <RouterLink to="/transform">transform</RouterLink>
         <RouterLink to="/animation">animation</RouterLink>
         <RouterLink to="/camera">camera</RouterLink>
-        <RouterLink to="/test">test</RouterLink>
+        <!-- <RouterLink to="/test">test</RouterLink> -->
+        <RouterLink to="/geometry">geometry</RouterLink>
 
       </nav>
     </div>

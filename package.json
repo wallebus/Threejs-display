@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@types/three": "^0.144.0",
+    "@vueuse/core": "^3.0.35",
     "gsap": "^3.11.2",
     "three": "^0.144.0",
     "vue": "^3.2.38",

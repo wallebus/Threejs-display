@@ -4,6 +4,7 @@ import {
   Color,
   Mesh,
   MeshBasicMaterial,
+  Object3D,
   OrthographicCamera,
   PerspectiveCamera,
   Scene,
@@ -12,16 +13,16 @@ import {
 
 import { CreateCanvas } from "./CreateCanvas";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
-import { onMounted, reactive } from "vue";
-import { watch } from "vue";
+import { onMounted } from "vue";
+// import { watch } from "vue";
 
 export function initScene() {
   const scene = new Scene();
 
-  const Size = reactive({
+  const Size = {
     width: window.innerWidth * 0.8,
     height: window.innerHeight * 0.8,
-  });
+  };
   const canvas = CreateCanvas();
   const renderer = new WebGLRenderer({ canvas: canvas });
   renderer.setSize(Size.width, Size.height);
@@ -64,9 +65,6 @@ export function initScene() {
       Size.width = window.innerWidth * 0.8;
       Size.height = window.innerHeight * 0.8;
       // console.log(aspect);
-    });
-
-    watch(Size, () => {
       aspect = Size.width / Size.height;
       perSpective.aspect = aspect;
       orthoGraphic.left = -3 * aspect;
@@ -77,9 +75,10 @@ export function initScene() {
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     });
   };
+
   let doubleClick = () =>
     window.addEventListener("dblclick", () => {
-      // webkit 适配Safari
+      // webkit 适配Safari on iphone
       const FullScreen =
         document.fullscreenElement || document.webkitFullscreenElement;
 
@@ -93,6 +92,15 @@ export function initScene() {
           : document.webkitExitFullscreen();
       }
     });
+  scene.add(cube, camera);
+
+  const tick = () => {
+    controls.update();
+    // cube.rotation.y = clock.getElapsedTime();
+    renderer.render(scene, camera);
+
+    requestAnimationFrame(tick);
+  };
   onMounted(() => {
     resize();
     doubleClick();
@@ -100,11 +108,15 @@ export function initScene() {
 
   const initScene = {
     scene: scene,
-    cube: cube,
+    object: cube,
     camera: camera,
     Cameras: Cameras,
     renderer: renderer,
     controls: controls,
+    material: material,
+    geometry: geometry,
+    animation: tick,
   };
+
   return initScene;
 }

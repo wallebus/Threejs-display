@@ -1,18 +1,41 @@
 {
-  "extends": "@vue/tsconfig/tsconfig.web.json",
-  "include": ["env.d.ts", "src/**/*.vue"],
   "compilerOptions": {
-    "target": "ESNext",
-    "module": "ESNext",
     "baseUrl": ".",
+    "module": "ESNext",
+    "target": "ESNext",
+    "lib": ["DOM", "ESNext"],
+    "strict": true,
+    "esModuleInterop": true,
+    "incremental": false,
+    "skipLibCheck": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "noUnusedLocals": true,
+    "strictNullChecks": true,
+    "forceConsistentCasingInFileNames": true,
+    "types": ["vite/client"],
     "paths": {
-      "@/*": ["./src/*"]
+      "~/*": ["src/*"]
     }
   },
-
-  "references": [
-    {
-      "path": "./tsconfig.config.json"
-    }
-  ]
+  "exclude": ["dist", "node_modules"]
 }
+// {
+//   "extends": "@vue/tsconfig/tsconfig.web.json",
+//   "include": ["env.d.ts", "src/**/*.vue"],
+//   "compilerOptions": {
+//     "target": "ESNext",
+//     "module": "ESNext",
+//     "baseUrl": ".",
+//     "paths": {
+//       "@/*": ["./src/*"]
+//     }
+//   },
+
+//   "references": [
+//     {
+//       "path": "./tsconfig.config.json"
+//     }
+//   ],
+//   "exclude": ["node_modules", "dist"]
+// }
