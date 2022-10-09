@@ -79,17 +79,13 @@ export function initScene() {
   let doubleClick = () =>
     window.addEventListener("dblclick", () => {
       // webkit 适配Safari on iphone
-      const FullScreen =
-        document.fullscreenElement || document.webkitFullscreenElement;
+      const FullScreen = document.fullscreenElement;
 
       if (!FullScreen) {
-        canvas.requestFullscreen
-          ? canvas.requestFullscreen()
-          : canvas.webkitRequestFullscreen();
+        canvas.requestFullscreen;
+        canvas.requestFullscreen();
       } else {
-        document.exitFullscreen
-          ? document.exitFullscreen()
-          : document.webkitExitFullscreen();
+        document.exitFullscreen();
       }
     });
   scene.add(cube, camera);
