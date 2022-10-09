@@ -18,7 +18,7 @@ const router = createRouter({
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import("../views/Basic.vue"),
+      component: () => import("../views/Base.vue"),
     },
     {
       path: "/transform",
@@ -26,7 +26,7 @@ const router = createRouter({
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import("../views/Transform.vue"),
+      component: () => import("../views/Transforms.vue"),
     },
     {
       path: "/animation",
