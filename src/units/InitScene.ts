@@ -77,7 +77,7 @@ export function initScene() {
   };
 
   let doubleClick = () =>
-    window.addEventListener("dblclick", () => {
+    canvas.addEventListener("dblclick", () => {
       // webkit 适配Safari on iphone
       const FullScreen = document.fullscreenElement;
 
@@ -115,4 +115,65 @@ export function initScene() {
   };
 
   return initScene;
+}
+
+class InitWorld {
+  public Canvas;
+  public Aspect;
+  public Object3D;
+  constructor(Width: number, Height: number, Object3D: Object3D) {
+    this.Canvas = this.CreateCanvas();
+    this.Aspect = Width / Height;
+    this.Object3D = Object3D || this.createBox;
+  }
+  CreateCanvas() {
+    const canvas = document.createElement("canvas");
+    const body = document.querySelector("body");
+    body?.append(canvas);
+    return canvas;
+  }
+  removeCanvas() {
+    this.Canvas.remove();
+  }
+  createRenderer(Canvas: HTMLCanvasElement) {
+    let renderer = new WebGLRenderer({ canvas: Canvas });
+    return renderer;
+  }
+  createScene() {
+    return new Scene();
+  }
+  createCamera() {
+    let perspective = new PerspectiveCamera();
+    let orthoGraphic = new OrthographicCamera();
+    let Cameras = { perspective, orthoGraphic };
+    return Cameras;
+  }
+  createBox() {
+    let geometry = new BoxGeometry(2, 2, 2);
+    let material = new MeshBasicMaterial({ color: new Color("blue") });
+    let cube = new Mesh(geometry, material);
+    return cube;
+  }
+  createWorld() {
+    let renderer = this.createRenderer(this.Canvas);
+    let Cameras = this.createCamera();
+    let scene = this.createScene();
+    let camera = Cameras.perspective;
+    scene.add(this.Object3D, camera);
+    renderer.render(scene, camera);
+
+    const world = {};
+  }
+  // resize() {
+  //   window.addEventListener("resize", () => {
+  //     aspect = Size.width / Size.height;
+  //     perSpective.aspect = aspect;
+  //     orthoGraphic.left = -3 * aspect;
+  //     orthoGraphic.right = 3 * aspect;
+  //     camera.updateProjectionMatrix();
+
+  //     renderer.setSize(Size.width, Size.height);
+  //     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  //   });
+  // }
 }

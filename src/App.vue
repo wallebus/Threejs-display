@@ -24,13 +24,6 @@ import { RouterLink, RouterView } from "vue-router";
 </template>
 
 <style scoped>
-#app {
-  max-width: 1024px;
-  margin: 0 auto;
-  padding: 2rem;
-  font-weight: normal;
-}
-
 nav {
   margin: 10px 0;
 }
