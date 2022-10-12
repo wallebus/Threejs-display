@@ -6,7 +6,8 @@
 h1 {
   text-align: center;
   height: 80vh;
-  width: 80vw;
+  width: 60vw;
   line-height: 80vh;
+  margin-left: 0;
 }
 </style>

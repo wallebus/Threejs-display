@@ -12,6 +12,7 @@ specifiers:
   eslint: ^8.22.0
   eslint-plugin-vue: ^9.3.0
   gsap: ^3.11.2
+  lil-gui: ^0.17.0
   npm-run-all: ^4.1.5
   prettier: ^2.7.1
   three: ^0.144.0
@@ -26,6 +27,7 @@ dependencies:
   '@types/three': 0.144.0
   '@vueuse/core': 3.0.35_vue@3.2.39
   gsap: 3.11.2
+  lil-gui: 0.17.0
   three: 0.144.0
   vue: 3.2.39
   vue-router: 4.1.5_vue@3.2.39
@@ -1551,6 +1553,10 @@ packages:
       prelude-ls: 1.2.1
       type-check: 0.4.0
     dev: true
+
+  /lil-gui/0.17.0:
+    resolution: {integrity: sha512-MVBHmgY+uEbmJNApAaPbtvNh1RCAeMnKym82SBjtp5rODTYKWtM+MXHCifLe2H2Ti1HuBGBtK/5SyG4ShQ3pUQ==}
+    dev: false
 
   /load-json-file/4.0.0:
     resolution: {integrity: sha512-Kx8hMakjX03tiGTLAIdJ+lL0htKnXjEZN6hk/tozf/WOuYGdZBJrZ+rCJRbVCugsjB3jMLn9746NsQIf5VjBMw==}
