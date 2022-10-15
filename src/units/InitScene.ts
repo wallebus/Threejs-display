@@ -72,7 +72,6 @@ export function initScene() {
       camera.updateProjectionMatrix();
 
       renderer.setSize(Size.width, Size.height);
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     });
   };
 
@@ -91,7 +90,9 @@ export function initScene() {
   scene.add(cube, camera);
 
   const tick = () => {
+    cube.updateMatrix();
     controls.update();
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     // cube.rotation.y = clock.getElapsedTime();
     renderer.render(scene, camera);
 

@@ -16,11 +16,15 @@ import { RouterLink, RouterView } from "vue-router";
         <RouterLink to="/camera">camera</RouterLink>
         <!-- <RouterLink to="/test">test</RouterLink> -->
         <RouterLink to="/geometry">geometry</RouterLink>
+        <RouterLink to="/datGui">gui</RouterLink>
+        <RouterLink to="/texture">texture</RouterLink>
 
       </nav>
     </div>
   </header>
-  <RouterView />
+  <KeepAlive>
+    <RouterView />
+  </KeepAlive>
 </template>
 
 <style scoped>

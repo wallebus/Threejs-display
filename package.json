@@ -12,8 +12,10 @@
   "dependencies": {
     "@types/three": "^0.144.0",
     "@vueuse/core": "^3.0.35",
+    "amfe-flexible": "^2.2.1",
     "gsap": "^3.11.2",
     "lil-gui": "^0.17.0",
+    "postcss-pxtorem": "^6.0.0",
     "three": "^0.144.0",
     "vue": "^3.2.38",
     "vue-router": "^4.1.5"

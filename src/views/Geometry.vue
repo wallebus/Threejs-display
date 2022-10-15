@@ -69,7 +69,7 @@ const checkValue = [{ name: "Box", value: 0 }, { name: "Sphere", value: 1 }, { n
 <style>
 .checkArea {
     display: flex;
-    margin-bottom: 5px;
+    margin-bottom: 2px;
 }
 
 .item {

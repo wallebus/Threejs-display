@@ -132,7 +132,7 @@ tick();
 }
 
 label {
-  margin: 8px;
+  margin: 5px;
 }
 
 h3 {
