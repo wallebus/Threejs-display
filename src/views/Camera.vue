@@ -1,13 +1,3 @@
-<template>
-  <div id="check">
-    <label for="">perSpective</label>
-    <input type="radio" name="camera" :value="0" v-model="checked" checked />
-    <label for="">orthoGraphic</label>
-    <input type="radio" name="camera" :value="1" v-model="checked" />
-  </div>
-  <h3>Touch and mousemove will rotate the cube</h3>
-</template>
-
 <script lang="ts" setup>
 // import {onMounted, ref} from"vue"
 import {
@@ -123,16 +113,32 @@ const tick = () => {
 };
 tick();
 </script>
-
-<style>
+<template>
+  <div id="check">
+    <label for="">perSpective</label>
+    <input type="radio" name="camera" :value="0" v-model="checked" checked />
+    <label for="">orthoGraphic</label>
+    <input type="radio" name="camera" :value="1" v-model="checked" />
+  </div>
+  <h3>Touch and mousemove will rotate the cube</h3>
+</template>
+<style scoped>
 #check {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
+#check {
+  margin: 0 2px;
+}
+
 label {
-  margin: 5px;
+  margin-left: 8px;
+}
+
+input {
+  margin-left: 1px;
 }
 
 h3 {

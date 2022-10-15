@@ -66,15 +66,26 @@ const checkValue = [{ name: "Box", value: 0 }, { name: "Sphere", value: 1 }, { n
     </div>
     <h3>Touch and mousemove will rotate the Object</h3>
 </template>
-<style>
+<style scoped>
 .checkArea {
     display: flex;
-    margin-bottom: 2px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 2px 0;
 }
 
 .item {
     display: flex;
-    place-items: center;
+    justify-content: center;
+    align-items: center;
     margin-left: 8px;
+}
+
+.item input {
+    margin-left: 1px;
+}
+
+h3 {
+    color: aqua;
 }
 </style>

@@ -4,32 +4,36 @@ import { RouterLink, RouterView } from "vue-router";
 </script>
 
 <template>
-  <!-- <canvas /> -->
   <header>
     <div class="wrapper">
-      <!-- <HelloWorld msg="You did it!" /> -->
       <nav>
         <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/basic">basic</RouterLink>
-        <RouterLink to="/transform">transform</RouterLink>
-        <RouterLink to="/animation">animation</RouterLink>
-        <RouterLink to="/camera">camera</RouterLink>
+        <RouterLink to="/basic">Basic</RouterLink>
+        <RouterLink to="/transform">Transform</RouterLink>
+        <RouterLink to="/animation">Animation</RouterLink>
+        <RouterLink to="/camera">Camera</RouterLink>
         <!-- <RouterLink to="/test">test</RouterLink> -->
-        <RouterLink to="/geometry">geometry</RouterLink>
-        <RouterLink to="/datGui">gui</RouterLink>
-        <RouterLink to="/texture">texture</RouterLink>
+        <RouterLink to="/geometry">Geometry</RouterLink>
+        <RouterLink to="/datGui">GUI</RouterLink>
+        <RouterLink to="/texture">Texture</RouterLink>
 
       </nav>
     </div>
   </header>
-  <KeepAlive>
-    <RouterView />
-  </KeepAlive>
+  <Router-view v-slot="{ Component }">
+    <Keep-Alive>
+      <component :is="Component" />
+    </Keep-Alive>
+  </Router-view>
 </template>
 
 <style scoped>
 nav {
-  margin: 10px 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 10px;
+  margin-bottom: 5px;
 }
 
 a,

@@ -26,6 +26,7 @@ export function initScene() {
   const canvas = CreateCanvas();
   const renderer = new WebGLRenderer({ canvas: canvas });
   renderer.setSize(Size.width, Size.height);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
   let aspect = Size.width / Size.height;
 
@@ -92,7 +93,6 @@ export function initScene() {
   const tick = () => {
     cube.updateMatrix();
     controls.update();
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     // cube.rotation.y = clock.getElapsedTime();
     renderer.render(scene, camera);
 

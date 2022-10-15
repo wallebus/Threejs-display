@@ -2,7 +2,7 @@ module.exports = {
   plugins: {
     "postcss-pxtorem": {
       rootValue() {
-        return 108;
+        return 192 / 2;
       },
       propList: ["*"],
     },
