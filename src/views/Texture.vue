@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { LoadingManager, MeshBasicMaterial, MirroredRepeatWrapping, RepeatWrapping, Texture, TextureLoader } from "three";
 import { initScene } from "../units/InitScene"
+import img from "../assets/texture-background.jpg"
 
 const world = initScene()
 const { log } = console
@@ -11,12 +12,12 @@ loadManger.onStart = () => { log('start') }
 loadManger.onLoad = () => { log('finish') }
 
 const textureLoader = new TextureLoader(loadManger)
-const doorTexture = textureLoader.load('src/assets/texture-background.jpg')
-doorTexture.repeat.x = 2
-doorTexture.repeat.y = 3
-// warpS=>x wrapT=>y
-doorTexture.wrapS = MirroredRepeatWrapping
-doorTexture.wrapT = RepeatWrapping
+const doorTexture = textureLoader.load(img)
+// doorTexture.repeat.x = 2
+// doorTexture.repeat.y = 3
+// // warpS=>x wrapT=>y
+// doorTexture.wrapS = MirroredRepeatWrapping
+// doorTexture.wrapT = RepeatWrapping
 
 const material = new MeshBasicMaterial({ map: doorTexture })
 
