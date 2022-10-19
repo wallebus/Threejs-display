@@ -56,6 +56,7 @@ export function initScene() {
   camera = Cameras.perSpective;
   camera.position.z = 5;
   camera.lookAt(cube.position);
+  camera.matrixAutoUpdate = true;
 
   let controls = new OrbitControls(camera, canvas);
   controls.enableDamping = true;
@@ -93,9 +94,7 @@ export function initScene() {
   const tick = () => {
     cube.updateMatrix();
     controls.update();
-    // cube.rotation.y = clock.getElapsedTime();
     renderer.render(scene, camera);
-
     requestAnimationFrame(tick);
   };
   onMounted(() => {
@@ -118,6 +117,7 @@ export function initScene() {
   return initScene;
 }
 
+// 重构
 class InitWorld {
   public Canvas;
   public Aspect;
