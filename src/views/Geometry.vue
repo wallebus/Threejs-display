@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { BoxGeometry, Camera, CircleGeometry, Color, CylinderGeometry, DoubleSide, Mesh, Object3D, OctahedronGeometry, SphereGeometry, TorusGeometry } from "three";
-import { onUnmounted, ref, watch } from "vue";
+import { onMounted, onUnmounted, ref, watch } from "vue";
 
 import { initScene } from "../units/InitScene"
 import { useStorage } from "@vueuse/core"

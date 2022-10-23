@@ -112,6 +112,7 @@ export function initScene() {
     material: material,
     geometry: geometry,
     animation: tick,
+    canvas,
   };
 
   return initScene;

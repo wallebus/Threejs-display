@@ -1,6 +1,5 @@
 {
   "name": "jounery",
-  "version": "0.0.0",
   "scripts": {
     "dev": "vite",
     "build": "run-p type-check build-only",
@@ -8,6 +7,9 @@
     "build-only": "vite build",
     "type-check": "vue-tsc --noEmit",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
+  },
+  "resolutions": {
+    "bin-wrapper": "npm:bin-wrapper-china"
   },
   "dependencies": {
     "@types/three": "^0.144.0",
@@ -33,6 +35,7 @@
     "typescript": "~4.7.4",
     "unplugin-vue-components": "^0.22.7",
     "vite": "^3.0.9",
+    "vite-plugin-imagemin": "^0.6.1",
     "vue-tsc": "^0.40.7"
   }
 }
