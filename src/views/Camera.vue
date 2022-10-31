@@ -35,7 +35,9 @@ const geometry = new BoxGeometry(2, 2, 2);
 const material = new MeshBasicMaterial({ color: new Color("red") });
 const cube = new Mesh(geometry, material);
 
-const renderer = new WebGLRenderer({ canvas: canvas });
+
+const renderer = new WebGLRenderer({ canvas: canvas, antialias: true });
+renderer.setPixelRatio(window.devicePixelRatio)
 
 renderer.setSize(Size.width, Size.height);
 

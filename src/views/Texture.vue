@@ -3,15 +3,19 @@ import { LoadingManager, MeshBasicMaterial, MirroredRepeatWrapping, NearestFilte
 import { initScene } from "../units/InitScene"
 import img1 from "~/texture-background.jpg"
 // import img2 from "~/texture-metal.png"
-import img3 from "~/texture-blue.png"
+import { ref } from "vue";
 
 const world = initScene()
 const { log } = console
 
 // loadingManager 多纹理贴图加载
+let loading = ref(true)
 const loadManger = new LoadingManager()
 loadManger.onStart = () => { log('start') }
-loadManger.onLoad = () => { log('finish') }
+loadManger.onLoad = () => {
+    loading.value = false;
+    log('finish')
+}
 
 const textureLoader = new TextureLoader(loadManger)
 const doorTexture = textureLoader.load(img1)
@@ -34,13 +38,11 @@ world.animation()
 // const texture = textureLoader.load('/src/assets/texture-background.jpg', () => {
 //     world.object.material = new MeshBasicMaterial({ map: texture })
 // })
-
 </script>
 <template >
-    <div>
-
-    </div>
+    <h2 class="animate__flipInX" v-if="loading"> Loading... </h2>
 </template>
-<style>
+
+<style scoped>
 
 </style>

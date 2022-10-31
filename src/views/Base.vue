@@ -12,12 +12,11 @@ import {
   Scene,
   WebGLRenderer,
 } from "three";
+import { render } from "vue";
 import { CreateCanvas } from "../units/CreateCanvas";
 const scene = new Scene();
 
-// if (document.querySelector("canvas") === null) {
 const canvas = CreateCanvas();
-// const canvas = document.querySelector("canvas") as HTMLElement;
 
 const Size = {
   width: window.innerWidth * 0.8,
@@ -33,7 +32,8 @@ const cube = new Mesh(geometry, material);
 cube.rotation.set(1, 0, 1);
 // cube.position.set()
 
-const renderer = new WebGLRenderer({ canvas: canvas });
+const renderer = new WebGLRenderer({ canvas: canvas, antialias: true });
+renderer.setPixelRatio(window.devicePixelRatio)
 
 // 距离归一化
 // console.log(cube.position.normalize());

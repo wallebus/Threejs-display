@@ -20,11 +20,7 @@ import { RouterLink, RouterView } from "vue-router";
       </nav>
     </div>
   </header>
-  <Router-view v-slot="{ Component }">
-    <Keep-Alive>
-      <component :is="Component" />
-    </Keep-Alive>
-  </Router-view>
+  <Router-view />
 </template>
 
 <style scoped>
