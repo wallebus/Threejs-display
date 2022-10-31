@@ -37,7 +37,7 @@ const cube = new Mesh(geometry, material);
 
 
 const renderer = new WebGLRenderer({ canvas: canvas, antialias: true });
-renderer.setPixelRatio(window.devicePixelRatio)
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 
 renderer.setSize(Size.width, Size.height);
 
@@ -95,7 +95,6 @@ function changeAspect() {
   orthoGraphic.right = 3 * aspect;
   camera.updateProjectionMatrix();
   renderer.setSize(Size.width, Size.height);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 }
 watch(Size, changeAspect);
 

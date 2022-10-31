@@ -33,7 +33,7 @@ cube.rotation.set(1, 0, 1);
 // cube.position.set()
 
 const renderer = new WebGLRenderer({ canvas: canvas, antialias: true });
-renderer.setPixelRatio(window.devicePixelRatio)
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 
 // 距离归一化
 // console.log(cube.position.normalize());

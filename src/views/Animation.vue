@@ -33,8 +33,8 @@ const geometry = new BoxGeometry(2, 2, 2);
 const material = new MeshBasicMaterial({ color: new Color("red") });
 const cube = new Mesh(geometry, material);
 
-const renderer = new WebGLRenderer({ canvas: canvas, antialias: true });
-renderer.setPixelRatio(window.devicePixelRatio)
+const renderer = new WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 // 距离归一化
 // console.log(cube.position.normalize());
 window.addEventListener("resize", () => {
@@ -45,8 +45,6 @@ window.addEventListener("resize", () => {
   camera.aspect = Size.width / Size.height;
   camera.updateProjectionMatrix();
   renderer.setSize(Size.width, Size.height);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 3))
-
 });
 
 renderer.setSize(Size.width, Size.height);
@@ -99,6 +97,8 @@ scene.add(cube, camera);
 
 const clock = new Clock();
 const tick = () => {
+  // console.log(window.devicePixelRatio)
+
   const elapsedTime = clock.getElapsedTime();
   camera.position.y = Math.cos(elapsedTime) * 5;
   camera.position.x = Math.sin(elapsedTime) * 4;

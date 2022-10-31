@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from "vue-router";
+// import { toggleDark } from "./units/Dark"
 // import { canvas } from "./components/canvas.vue";
 </script>
 
@@ -19,6 +20,8 @@ import { RouterLink, RouterView } from "vue-router";
 
       </nav>
     </div>
+
+    <!-- <button @click="toggleDark()">dark</button> -->
   </header>
   <Router-view />
 </template>

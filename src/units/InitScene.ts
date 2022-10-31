@@ -26,7 +26,7 @@ export function initScene() {
   const canvas = CreateCanvas();
   const renderer = new WebGLRenderer({ canvas: canvas, antialias: true });
   renderer.setSize(Size.width, Size.height);
-  renderer.setPixelRatio(window.devicePixelRatio);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
   let aspect = Size.width / Size.height;
 
