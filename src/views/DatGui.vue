@@ -1,15 +1,13 @@
 <script lang="ts" setup>
-import { useStorage } from "@vueuse/core";
 import gsap from "gsap";
 import GUI from "lil-gui";
 import { AxesHelper, Color, Mesh, Object3D } from "three";
-import { flattenJSON } from "three/src/animation/AnimationUtils";
 import { onUnmounted, type Ref } from "vue";
 import { initScene } from "../units/InitScene"
 // gsap.registerPlugin()
 
 const world = initScene()
-const gui = new GUI({ autoPlace: true, width: 220 })
+const gui = new GUI({ autoPlace: true, width: 200 })
 // gui.close()
 const cube = world.object
 const axesHelper = new AxesHelper(3)
@@ -18,7 +16,7 @@ cube.add(axesHelper)
 gui.add(cube.position, 'x', -3, 3, 0.01).name("cube.x")
 gui.add(cube.position, 'y').min(-3).max(3).step(0.1).name('cube.y')
 gui.add(cube, 'visible')
-gui.add(cube.material, 'wireframe').name('wireframe(框架)')
+gui.add(cube.material, 'wireframe').name('wireframe(框线)')
 gui.add(axesHelper, 'visible').name("axesHelp(轴线)")
 
 const params = {
@@ -35,7 +33,7 @@ gui.addColor(params, 'color').onChange(() => {
 onUnmounted(() => {
     gui.destroy()
 })
-gui.add(params, "gsap").name("rotate(旋转物体)")
+gui.add(params, "gsap").name("rotate(旋转)")
 world.animation()
 // gui.add(params, 'size', 1, 10, 1).name('size(大小)').onChange(() => {
 //     let pars = cube.geometry.parameters
@@ -58,5 +56,9 @@ world.animation()
     </div>
 </template>
 <style>
-
+.lil-gui.autoPlace {
+    left: 15px;
+    bottom: 0;
+    top: auto
+}
 </style>

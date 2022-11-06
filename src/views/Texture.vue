@@ -44,5 +44,10 @@ world.animation()
 </template>
 
 <style scoped>
-
+h2 {
+    position: fixed;
+    top: 4rem;
+    z-index: 2;
+    left: 4.5rem;
+}
 </style>

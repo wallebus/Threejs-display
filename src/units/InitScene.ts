@@ -24,7 +24,11 @@ export function initScene() {
     height: window.innerHeight * 0.8,
   };
   const canvas = CreateCanvas();
-  const renderer = new WebGLRenderer({ canvas: canvas, antialias: true });
+  const renderer = new WebGLRenderer({
+    canvas: canvas,
+    antialias: true,
+    alpha: true,
+  });
   renderer.setSize(Size.width, Size.height);
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
@@ -91,6 +95,7 @@ export function initScene() {
     });
   scene.add(cube, camera);
 
+  // 动画函数
   const tick = () => {
     cube.updateMatrix();
     controls.update();

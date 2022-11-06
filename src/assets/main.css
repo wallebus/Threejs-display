@@ -11,7 +11,13 @@ body {
   padding: 5px;
   overflow: hidden;
 }
+.dark {
+  color-scheme: dark;
+}
 
+.light {
+  color-scheme: light;
+}
 @media (hover: hover) {
   a:hover {
     background-color: hsla(160, 100%, 37%, 0.2);

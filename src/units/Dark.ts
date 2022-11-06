@@ -1,10 +1,10 @@
 import { useDark, useToggle } from "@vueuse/core";
 
 const isDark = useDark({
-  selector: "body",
-  attribute: "color-scheme",
-  valueDark: "dark",
-  valueLight: "light",
+  onChanged(dark: boolean) {
+    const body = document.querySelector("body");
+    body?.classList.toggle("dark");
+  },
 });
 
 export const toggleDark = useToggle(isDark);

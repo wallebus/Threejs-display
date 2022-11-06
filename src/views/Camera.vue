@@ -36,7 +36,7 @@ const material = new MeshBasicMaterial({ color: new Color("red") });
 const cube = new Mesh(geometry, material);
 
 
-const renderer = new WebGLRenderer({ canvas: canvas, antialias: true });
+const renderer = new WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 
 renderer.setSize(Size.width, Size.height);
@@ -121,7 +121,7 @@ tick();
     <label for="">orthoGraphic</label>
     <input type="radio" name="camera" :value="1" v-model="checked" />
   </div>
-  <h3>Touch and mousemove will rotate the cube</h3>
+  <h3>Touch and mousemove will rotate the cube(可触动)</h3>
 </template>
 <style scoped>
 #check {

@@ -23,44 +23,44 @@ const check = useStorage('check', 0, sessionStorage)
 
 const Objects = [Box, Sphere, Circle, Cylinder, Torus, Octahearon]
 
-let gui: dat.GUI
+// let gui: dat.GUI
 function geometryChange() {
     let geometry = Objects[Number(check.value)]
     const object = new Mesh(geometry, Init.material)
-    console.log()
-    if (typeof (gui) !== "undefined") {
-        let old = gui as dat.GUI
-        old.destroy()
-    }
-    gui = new dat.GUI({ width: 160 })
+    // console.log()
+    // if (typeof (gui) !== "undefined") {
+    //     let old = gui as dat.GUI
+    //     old.destroy()
+    // }
+    // gui = new dat.GUI({ width: 160 })
 
-    guiOptions(object)
+    // guiOptions(object)
     Init.scene.clear()
     Init.scene.add(object)
 }
 
 // const Guis = new Array(Objects.length)
-function guiOptions(object: Object3D) {
+// function guiOptions(object: Object3D) {
 
-    gui.add(object.position, 'x')
-    gui.add(object.position, 'y')
-    gui.add(object.position, 'z')
-}
+//     gui.add(object.position, 'x')
+//     gui.add(object.position, 'y')
+//     gui.add(object.position, 'z')
+// }
 
 watch(check, geometryChange, { immediate: true })
 Init.camera.position.z = 6
 Init.animation()
 
-onUnmounted(() => {
-    gui.destroy()
-})
+// onUnmounted(() => {
+//     gui.destroy()
+// })
 
 const checkValue = [{ name: "Box", value: 0 }, { name: "Sphere", value: 1 }, { name: "Circle", value: 2 }, { name: "Cylinder", value: 3 }, { name: "Torus", value: 4 }, { name: "Octahearon", value: 5 }]
 </script>
 <template >
     <div class="checkArea">
         <div v-for="item in checkValue" class="item">
-            <label for="">{{item.name}}</label>
+            <label for="">{{ item.name }}</label>
             <input type="radio" name="geometry" :value="item.value" v-model="check">
         </div>
     </div>
