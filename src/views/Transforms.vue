@@ -93,7 +93,7 @@ window.addEventListener("resize", () => {
 });
 
 //渲染器
-const renderer = new WebGLRenderer({ canvas: canvas });
+const renderer = new WebGLRenderer({ canvas: canvas, alpha: true });
 renderer.setSize(Size.Width, Size.Height);
 
 function toDegrees(radian: number) {
