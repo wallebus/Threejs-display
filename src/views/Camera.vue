@@ -16,7 +16,7 @@ import {
   WebGLRenderer,
 } from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
-import { reactive, ref, render, watch } from "vue";
+import { onMounted, reactive, ref, render, watch } from "vue";
 import { CreateCanvas } from "../units/CreateCanvas";
 const scene = new Scene();
 
@@ -98,21 +98,26 @@ function changeAspect() {
 }
 watch(Size, changeAspect);
 
-const tick = () => {
-  // console.log(camera);
-  // camera.position.set(cursor.x, cursor.y, 3);
-  // camera.position.x = cursor.x * 5;
-  // camera.position.y = cursor.y * 5;
-  controls.update();
-  // camera.updateMatrixWorld();
-  // cube.quaternion.set()
+onMounted(() => {
   scene.add(cube, camera);
-  // cube.rotation.y = clock.getElapsedTime();
-  renderer.render(scene, camera);
 
-  requestAnimationFrame(tick);
-};
-tick();
+  const tick = () => {
+    // console.log(camera);
+    // camera.position.set(cursor.x, cursor.y, 3);
+    // camera.position.x = cursor.x * 5;
+    // camera.position.y = cursor.y * 5;
+    controls.update();
+    // camera.updateMatrixWorld();
+    // cube.quaternion.set()
+    // cube.rotation.y = clock.getElapsedTime();
+    renderer.render(scene, camera);
+
+    requestAnimationFrame(tick);
+  };
+  tick();
+}
+)
+
 </script>
 <template>
   <div id="check">

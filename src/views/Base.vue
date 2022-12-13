@@ -31,8 +31,14 @@ const material = new MeshBasicMaterial({ color: new Color("red") });
 const cube = new Mesh(geometry, material);
 cube.rotation.set(1, 0, 1);
 // cube.position.set()
+console.log(cube)
 
-const renderer = new WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
+const renderer = new WebGLRenderer({
+  canvas: canvas,
+  antialias: true,
+  alpha: true
+});
+
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 
 // 距离归一化

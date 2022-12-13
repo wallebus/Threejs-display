@@ -1,61 +1,104 @@
 <script lang="ts" setup>
-import gsap from "gsap";
-import GUI from "lil-gui";
-import { AxesHelper, Color, Mesh, Object3D } from "three";
-import { onUnmounted, type Ref } from "vue";
-import { initScene } from "../units/InitScene"
-// gsap.registerPlugin()
+import { CreateCanvas } from '@/units/CreateCanvas';
+import GUI from 'lil-gui';
+import { BoxGeometry, Color, Mesh, MeshBasicMaterial, MeshPhongMaterial, PerspectiveCamera, Scene, WebGLRenderer } from 'three';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+import { onUnmounted } from 'vue';
 
-const world = initScene()
-const gui = new GUI({ autoPlace: true, width: 200 })
-// gui.close()
-const cube = world.object
-const axesHelper = new AxesHelper(3)
-cube.add(axesHelper)
-
-gui.add(cube.position, 'x', -3, 3, 0.01).name("cube.x")
-gui.add(cube.position, 'y').min(-3).max(3).step(0.1).name('cube.y')
-gui.add(cube, 'visible')
-gui.add(cube.material, 'wireframe').name('wireframe(框线)')
-gui.add(axesHelper, 'visible').name("axesHelp(轴线)")
-
-const params = {
-    size: 2,
-    segments: 1,
-    color: new Color("red"),
-    gsap: () => {
-        gsap.to(cube.rotation, { direction: 1, y: cube.rotation.y + Math.PI * 2 })
-    }
+// Scene size
+const size = {
+    width: window.innerWidth * 0.8,
+    height: window.innerHeight * 0.8,
 }
-gui.addColor(params, 'color').onChange(() => {
-    cube.material.color.set(params.color)
+const box = {
+    width: 2,
+    height: 2,
+    depth: 2,
+    widthSegments: 1,
+    heightSegments: 1,
+    depthSegments: 1
+
+}
+// Init scene
+const aspect = size.width / size.height;
+const canvas = CreateCanvas()
+const renderer = new WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
+renderer.setSize(size.width, size.height)
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+
+const scene = new Scene()
+const camera = new PerspectiveCamera(
+    75,
+    aspect,
+    0.1,
+    20
+)
+camera.position.z = 5;
+
+// Init cube
+const geometry = new BoxGeometry(box.width, box.height, box.depth, box.widthSegments, box.heightSegments, box.depthSegments)
+const mesh = new Mesh(geometry, new MeshBasicMaterial({ color: new Color('skyblue'), wireframe: true }))
+const control = new OrbitControls(camera, canvas)
+
+
+scene.add(mesh, camera)
+// Animation
+const tick = (() => {
+    control.update()
+    mesh.rotation.x += 0.005;
+    mesh.rotation.y += 0.005;
+    renderer.render(scene, camera)
+
+    requestAnimationFrame(tick)
 })
+tick()
+
+// Window resize
+window.addEventListener('resize', () => {
+
+    size.width = window.innerWidth * 0.8;
+    size.height = window.innerHeight * 0.8;
+    camera.aspect = size.width / size.height;
+    camera.updateProjectionMatrix();
+
+    renderer.setSize(size.width, size.height)
+}, false)
+
+// GUI
+const gui = new GUI({ width: 200 })
+
+let i = 0;
+for (let parameter in box) {
+    if (i <= 2) {
+        gui.add(box, parameter).max(8).min(1).onChange(update)
+    } else {
+        gui.add(box, parameter).max(16).min(1).step(1).onChange(update)
+    }
+    i++;
+}
+gui.add(mesh.position, 'x', -3, 3, 0.01).name("cube.x")
+gui.add(mesh.position, 'y').min(-3).max(3).step(0.1).name('cube.y')
+gui.add(mesh.position, 'z').min(-3).max(3).step(0.1).name('cube.z')
+gui.add(mesh, 'visible')
+
+
+function updateGeometry(mesh: Mesh, geometry: BoxGeometry) {
+    mesh.geometry.dispose()
+    mesh.geometry = geometry
+}
+function update() {
+    updateGeometry(mesh, new BoxGeometry(box.width, box.height, box.depth, box.widthSegments, box.heightSegments, box.depthSegments))
+}
+
 onUnmounted(() => {
     gui.destroy()
 })
-gui.add(params, "gsap").name("rotate(旋转)")
-world.animation()
-// gui.add(params, 'size', 1, 10, 1).name('size(大小)').onChange(() => {
-//     let pars = cube.geometry.parameters
-//     pars.depth = params.size
-//     pars.height = params.size
-//     pars.width = params.size
-//     // console.log(cube.geometry.dispose())
-// })
-// gui.add(params, 'segments', 1, 99, 1).onChange(() => {
-//     let pars = cube.geometry.parameters
-//     pars.depthSegments = params.segments
-//     pars.heightSegments = params.segments
-//     pars.widthSegments = params.segments
-// })
-
 </script>
-<template >
-    <div>
 
-    </div>
+<template >
+
 </template>
-<style>
+<style >
 .lil-gui.autoPlace {
     left: 15px;
     bottom: 0;
