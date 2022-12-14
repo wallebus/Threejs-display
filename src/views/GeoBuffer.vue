@@ -6,7 +6,6 @@ import {
     PerspectiveCamera,
     BufferGeometry,
     WebGLRenderer,
-    BoxGeometry,
     MeshBasicMaterial,
     Color,
     Mesh,
@@ -80,7 +79,7 @@ onUnmounted(() => {
 <template>
 
 </template>
-<style>
+<style >
 .lil-gui.autoPlace {
     left: 15px;
     bottom: 0;

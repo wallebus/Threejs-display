@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { LoadingManager, MeshBasicMaterial, MirroredRepeatWrapping, NearestFilter, RepeatWrapping, Texture, TextureLoader } from "three";
+import { Color, DoubleSide, LinearMipMapLinearFilter, LoadingManager, MeshBasicMaterial, MirroredRepeatWrapping, NearestFilter, RepeatWrapping, Texture, TextureLoader } from "three";
 import { initScene } from "../units/InitScene"
 import img1 from "~/texture-background.jpg"
 // import img2 from "~/texture-metal.png"
@@ -19,19 +19,39 @@ loadManger.onLoad = () => {
 
 const textureLoader = new TextureLoader(loadManger)
 const doorTexture = textureLoader.load(img1)
-// doorTexture.rotation = Math.PI * 0.5
-// doorTexture.magFilter = NearestFilter
-// doorTexture.minFilter = NearestFilter
-// doorTexture.repeat.x = 2
-// doorTexture.repeat.y = 3
-// // warpS=>x wrapT=>y
-// doorTexture.wrapS = MirroredRepeatWrapping
-// doorTexture.wrapT = RepeatWrapping
+const material = new MeshBasicMaterial({
+    alphaMap: doorTexture,
+    map: doorTexture,
+    transparent: true,
+    opacity: 1,
+    side: DoubleSide,
+    aoMap: doorTexture,
+    aoMapIntensity: 0.3
 
-const material = new MeshBasicMaterial({ map: doorTexture })
+})
 
 world.object.material = material
 world.animation()
+
+// 纹理偏移 0-1
+// doorTexture.offset.x += 1;
+
+// 旋转
+// doorTexture.center.set(1, 0)
+// doorTexture.rotation = Math.PI / 4
+// doorTexture.dispose()
+
+// 像素平铺 当纹理像素覆盖大于1时 magFilter 小于1时 minFilter的的策略为三线性插值
+// doorTexture.magFilter = NearestFilter
+// doorTexture.minFilter = LinearMipMapLinearFilter
+
+// 重复
+// doorTexture.repeat.x = 10
+// doorTexture.repeat.y = 10
+// // warpS=>x wrapT=>y
+// doorTexture.wrapS = MirroredRepeatWrapping
+// doorTexture.wrapT = MirroredRepeatWrapping
+
 
 // build-in TextureLoader
 // const textureLoader = new TextureLoader()

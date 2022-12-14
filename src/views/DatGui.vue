@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { CreateCanvas } from '@/units/CreateCanvas';
+import { useStorage } from '@vueuse/core';
 import GUI from 'lil-gui';
 import { BoxGeometry, Color, Mesh, MeshBasicMaterial, MeshPhongMaterial, PerspectiveCamera, Scene, WebGLRenderer } from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
@@ -10,7 +11,7 @@ const size = {
     width: window.innerWidth * 0.8,
     height: window.innerHeight * 0.8,
 }
-const box = {
+const box = useStorage('boxParameter', {
     width: 2,
     height: 2,
     depth: 2,
@@ -18,7 +19,7 @@ const box = {
     heightSegments: 1,
     depthSegments: 1
 
-}
+})
 // Init scene
 const aspect = size.width / size.height;
 const canvas = CreateCanvas()
@@ -36,7 +37,7 @@ const camera = new PerspectiveCamera(
 camera.position.z = 5;
 
 // Init cube
-const geometry = new BoxGeometry(box.width, box.height, box.depth, box.widthSegments, box.heightSegments, box.depthSegments)
+const geometry = new BoxGeometry(box.value.width, box.value.height, box.value.depth, box.value.widthSegments, box.value.heightSegments, box.value.depthSegments)
 const mesh = new Mesh(geometry, new MeshBasicMaterial({ color: new Color('skyblue'), wireframe: true }))
 const control = new OrbitControls(camera, canvas)
 
@@ -68,11 +69,11 @@ window.addEventListener('resize', () => {
 const gui = new GUI({ width: 200 })
 
 let i = 0;
-for (let parameter in box) {
+for (let parameter in box.value) {
     if (i <= 2) {
-        gui.add(box, parameter).max(8).min(1).onChange(update)
+        gui.add(box.value, parameter).max(8).min(1).onChange(update)
     } else {
-        gui.add(box, parameter).max(16).min(1).step(1).onChange(update)
+        gui.add(box.value, parameter).max(16).min(1).step(1).onChange(update)
     }
     i++;
 }
@@ -87,7 +88,7 @@ function updateGeometry(mesh: Mesh, geometry: BoxGeometry) {
     mesh.geometry = geometry
 }
 function update() {
-    updateGeometry(mesh, new BoxGeometry(box.width, box.height, box.depth, box.widthSegments, box.heightSegments, box.depthSegments))
+    updateGeometry(mesh, new BoxGeometry(box.value.width, box.value.height, box.value.depth, box.value.widthSegments, box.value.heightSegments, box.value.depthSegments))
 }
 
 onUnmounted(() => {

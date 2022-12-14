@@ -18,6 +18,7 @@ import { toggleDark } from "./units/Dark"
         <RouterLink to="/datGui">GUI</RouterLink>
         <RouterLink to="/buffer">Buffer</RouterLink>
         <RouterLink to="/texture">Texture</RouterLink>
+        <RouterLink to="/texture">Light</RouterLink>
         <RouterLink to="/material">Material</RouterLink>
       </nav>
     </div>
