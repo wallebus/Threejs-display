@@ -3,12 +3,15 @@ import {
   BoxGeometry,
   Color,
   Mesh,
+  Material,
   MeshBasicMaterial,
   Object3D,
   OrthographicCamera,
   PerspectiveCamera,
   Scene,
+  MeshStandardMaterial,
   WebGLRenderer,
+  BufferGeometry,
 } from "three";
 
 import { CreateCanvas } from "./CreateCanvas";
@@ -34,8 +37,10 @@ export function initScene() {
 
   let aspect = Size.width / Size.height;
 
-  const geometry = new BoxGeometry(2, 2, 2);
-  const material = new MeshBasicMaterial({ color: new Color("red") });
+  const geometry: BufferGeometry = new BoxGeometry(2, 2, 2);
+  const material = new MeshBasicMaterial({
+    color: new Color("red"),
+  });
   const cube = new Mesh(geometry, material);
 
   const perSpective = new PerspectiveCamera(75, aspect, 0.1, 20);
@@ -124,63 +129,63 @@ export function initScene() {
 }
 
 // 重构
-class InitWorld {
-  public Canvas;
-  public Aspect;
-  public Object3D;
-  constructor(Width: number, Height: number, Object3D: Object3D) {
-    this.Canvas = this.CreateCanvas();
-    this.Aspect = Width / Height;
-    this.Object3D = Object3D || this.createBox;
-  }
-  CreateCanvas() {
-    const canvas = document.createElement("canvas");
-    const body = document.querySelector("body");
-    body?.append(canvas);
-    return canvas;
-  }
-  removeCanvas() {
-    this.Canvas.remove();
-  }
-  createRenderer(Canvas: HTMLCanvasElement) {
-    let renderer = new WebGLRenderer({ canvas: Canvas });
-    return renderer;
-  }
-  createScene() {
-    return new Scene();
-  }
-  createCamera() {
-    let perspective = new PerspectiveCamera();
-    let orthoGraphic = new OrthographicCamera();
-    let Cameras = { perspective, orthoGraphic };
-    return Cameras;
-  }
-  createBox() {
-    let geometry = new BoxGeometry(2, 2, 2);
-    let material = new MeshBasicMaterial({ color: new Color("blue") });
-    let cube = new Mesh(geometry, material);
-    return cube;
-  }
-  createWorld() {
-    let renderer = this.createRenderer(this.Canvas);
-    let Cameras = this.createCamera();
-    let scene = this.createScene();
-    let camera = Cameras.perspective;
-    scene.add(this.Object3D, camera);
-    renderer.render(scene, camera);
+// class InitWorld {
+//   public Canvas;
+//   public Aspect;
+//   public Object3D;
+//   constructor(Width: number, Height: number, Object3D: Object3D) {
+//     this.Canvas = this.CreateCanvas();
+//     this.Aspect = Width / Height;
+//     this.Object3D = Object3D || this.createBox;
+//   }
+//   CreateCanvas() {
+//     const canvas = document.createElement("canvas");
+//     const body = document.querySelector("body");
+//     body?.append(canvas);
+//     return canvas;
+//   }
+//   removeCanvas() {
+//     this.Canvas.remove();
+//   }
+//   createRenderer(Canvas: HTMLCanvasElement) {
+//     let renderer = new WebGLRenderer({ canvas: Canvas });
+//     return renderer;
+//   }
+//   createScene() {
+//     return new Scene();
+//   }
+//   createCamera() {
+//     let perspective = new PerspectiveCamera();
+//     let orthoGraphic = new OrthographicCamera();
+//     let Cameras = { perspective, orthoGraphic };
+//     return Cameras;
+//   }
+//   createBox() {
+//     let geometry = new BoxGeometry(2, 2, 2);
+//     let material = new MeshBasicMaterial({ color: new Color("blue") });
+//     let cube = new Mesh(geometry, material);
+//     return cube;
+//   }
+//   createWorld() {
+//     let renderer = this.createRenderer(this.Canvas);
+//     let Cameras = this.createCamera();
+//     let scene = this.createScene();
+//     let camera = Cameras.perspective;
+//     scene.add(this.Object3D, camera);
+//     renderer.render(scene, camera);
 
-    const world = {};
-  }
-  // resize() {
-  //   window.addEventListener("resize", () => {
-  //     aspect = Size.width / Size.height;
-  //     perSpective.aspect = aspect;
-  //     orthoGraphic.left = -3 * aspect;
-  //     orthoGraphic.right = 3 * aspect;
-  //     camera.updateProjectionMatrix();
+//     const world = {};
+//   }
+// resize() {
+//   window.addEventListener("resize", () => {
+//     aspect = Size.width / Size.height;
+//     perSpective.aspect = aspect;
+//     orthoGraphic.left = -3 * aspect;
+//     orthoGraphic.right = 3 * aspect;
+//     camera.updateProjectionMatrix();
 
-  //     renderer.setSize(Size.width, Size.height);
-  //     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-  //   });
-  // }
-}
+//     renderer.setSize(Size.width, Size.height);
+//     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+//   });
+// }
+// }

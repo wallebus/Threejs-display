@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { Color, DoubleSide, LinearMipMapLinearFilter, LoadingManager, MeshBasicMaterial, MirroredRepeatWrapping, NearestFilter, RepeatWrapping, Texture, TextureLoader } from "three";
+import { AmbientLight, Color, DirectionalLight, DoubleSide, HemisphereLight, LinearMipMapLinearFilter, LoadingManager, MeshBasicMaterial, MeshStandardMaterial, MirroredRepeatWrapping, NearestFilter, RepeatWrapping, Texture, TextureLoader } from "three";
 import { initScene } from "../units/InitScene"
 import img1 from "~/texture-background.jpg"
 // import img2 from "~/texture-metal.png"
@@ -19,18 +19,22 @@ loadManger.onLoad = () => {
 
 const textureLoader = new TextureLoader(loadManger)
 const doorTexture = textureLoader.load(img1)
-const material = new MeshBasicMaterial({
+const material = new MeshStandardMaterial({
     alphaMap: doorTexture,
     map: doorTexture,
     transparent: true,
     opacity: 1,
     side: DoubleSide,
     aoMap: doorTexture,
-    aoMapIntensity: 0.3
-
+    aoMapIntensity: 0.3,
 })
 
-world.object.material = material
+const Light = new DirectionalLight(0xffffff, 1)
+Light.position.set(6, 6, 6)
+// const 
+
+world.object.material = material as any
+world.scene.add(Light)
 world.animation()
 
 // 纹理偏移 0-1
@@ -65,9 +69,11 @@ world.animation()
 
 <style scoped>
 h2 {
-    position: fixed;
-    top: 4rem;
+    position: absolute;
+    height: 80%;
+    width: 100%;
+    text-align: center;
+    line-height: 80vh;
     z-index: 2;
-    left: 4.5rem;
 }
 </style>
