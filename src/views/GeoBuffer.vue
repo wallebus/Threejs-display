@@ -42,7 +42,7 @@ const array = new Float32Array([
     -1.0, -1.0, 0.0,
     -1.0, 1.0, 1.0,
     1.0, 1.0, 1.0,
-    -1.0, -1.0, 1.0,
+    -1.0, -1.0, 2.0,
 
 ])
 const geometry = new BufferGeometry()

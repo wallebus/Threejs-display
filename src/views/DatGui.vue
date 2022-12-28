@@ -2,7 +2,7 @@
 import { CreateCanvas } from '@/units/CreateCanvas';
 import { useStorage } from '@vueuse/core';
 import GUI from 'lil-gui';
-import { BoxGeometry, Color, Mesh, MeshBasicMaterial, MeshPhongMaterial, PerspectiveCamera, Scene, WebGLRenderer } from 'three';
+import { AmbientLight, BoxGeometry, Color, Mesh, MeshBasicMaterial, MeshPhongMaterial, PerspectiveCamera, Scene, WebGLRenderer } from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { onUnmounted } from 'vue';
 
@@ -22,7 +22,7 @@ const box = useStorage('boxParameter', {
 })
 // Init scene
 const aspect = size.width / size.height;
-const canvas = CreateCanvas()
+const canvas = document.querySelector('canvas') || CreateCanvas()
 const renderer = new WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
 renderer.setSize(size.width, size.height)
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
@@ -40,9 +40,10 @@ camera.position.z = 5;
 const geometry = new BoxGeometry(box.value.width, box.value.height, box.value.depth, box.value.widthSegments, box.value.heightSegments, box.value.depthSegments)
 const mesh = new Mesh(geometry, new MeshBasicMaterial({ color: new Color('skyblue'), wireframe: true }))
 const control = new OrbitControls(camera, canvas)
+const Light = new AmbientLight(new Color('yellow'), 0.5)
 
 
-scene.add(mesh, camera)
+scene.add(mesh, camera, Light)
 // Animation
 const tick = (() => {
     control.update()
