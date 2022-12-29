@@ -1,10 +1,9 @@
 <script lang="ts" setup>
-import { BoxGeometry, Camera, CircleGeometry, Color, CylinderGeometry, DoubleSide, Mesh, Object3D, OctahedronGeometry, SphereGeometry, TorusGeometry } from "three";
-import { onMounted, onUnmounted, ref, watch } from "vue";
+import { BoxGeometry, CircleGeometry, Color, CylinderGeometry, DoubleSide, Mesh, Object3D, OctahedronGeometry, SphereGeometry, TorusGeometry } from "three";
+import { watch } from "vue";
 
 import { initScene } from "../units/InitScene"
 import { useStorage } from "@vueuse/core"
-import * as dat from "lil-gui"
 
 const Init = initScene()
 
@@ -64,7 +63,6 @@ const checkValue = [{ name: "Box", value: 0 }, { name: "Sphere", value: 1 }, { n
             <input type="radio" name="geometry" :value="item.value" v-model="check">
         </div>
     </div>
-    <h3>Touch and mousemove will rotate the Object</h3>
 </template>
 <style scoped>
 .checkArea {

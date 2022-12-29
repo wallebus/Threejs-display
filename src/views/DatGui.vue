@@ -16,8 +16,8 @@ const box = useStorage('boxParameter', {
     height: 2,
     depth: 2,
     widthSegments: 1,
-    heightSegments: 1,
-    depthSegments: 1
+    heightSegments: 2,
+    depthSegments: 3
 
 })
 // Init scene
@@ -74,14 +74,13 @@ for (let parameter in box.value) {
     if (i <= 2) {
         gui.add(box.value, parameter).max(8).min(1).onChange(update)
     } else {
-        gui.add(box.value, parameter).max(16).min(1).step(1).onChange(update)
+        gui.add(box.value, parameter).max(16).min(1).step(1).name(parameter.substring(0, 1) + 'Segments').onChange(update)
     }
     i++;
 }
 gui.add(mesh.position, 'x', -3, 3, 0.01).name("cube.x")
 gui.add(mesh.position, 'y').min(-3).max(3).step(0.1).name('cube.y')
 gui.add(mesh.position, 'z').min(-3).max(3).step(0.1).name('cube.z')
-gui.add(mesh, 'visible')
 
 
 function updateGeometry(mesh: Mesh, geometry: BoxGeometry) {
