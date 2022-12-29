@@ -46,6 +46,7 @@ camera.position.z = 5;
 
 const mapP = {
     displacementScale: 0.1,
+    aoMapIntensity: 1,
     roughness: 0.6,
     metalness: 0.7,
     normalX: 1,
@@ -64,7 +65,6 @@ const manager = new LoadingManager()
 let progress = ref(0)
 manager.onProgress = (url, loaded, total) => {
     progress.value = loaded / total * 100;
-    console.log(progress.value)
 }
 
 const loader = new TextureLoader(manager);
@@ -76,7 +76,7 @@ const colorM = loader.load(color)
 const normalM = loader.load(normal)
 const metalnessM = loader.load(metalness)
 const hdeLoader = new RGBELoader(manager)
-hdeLoader.load('public/env.hdr', (envM) => {
+hdeLoader.load('./env.hdr', (envM) => {
     envM.mapping = EquirectangularReflectionMapping
     scene.background = envM
     scene.environment = envM
@@ -89,7 +89,7 @@ const material = new MeshStandardMaterial({
     displacementScale: mapP.displacementScale,
     // displacementBias: 1.5,
     aoMap: AOM,
-    aoMapIntensity: 1,
+    aoMapIntensity: mapP.aoMapIntensity,
     roughnessMap: roughnessM,
     roughness: mapP.roughness,
     normalMap: normalM,
@@ -127,6 +127,7 @@ gui.add(mapP, 'metalness').max(2).min(0).onChange((value: number) => { material.
 gui.add(mapP, 'roughness').max(2).min(0).onChange((value: number) => { material.roughness = value })
 gui.add(mapP, 'normalX').max(6).min(-6).onChange((value: number) => { material.normalScale = new Vector2(value, mapP.normalY) })
 gui.add(mapP, 'normalY').max(6).min(-6).onChange((value: number) => { material.normalScale = new Vector2(mapP.normalX, value) })
+gui.add(mapP, 'aoMapIntensity').max(1).min(0).onChange((value: number) => { material.aoMapIntensity = value })
 
 gui.add(mesh.rotation, 'y').max(Math.PI / 4).min(-Math.PI / 4).name('rotation.y')
 onUnmounted(() => {
