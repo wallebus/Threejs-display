@@ -15,7 +15,6 @@ import height from '~/door/height.jpg'
 import metalness from '~/door/metalness.jpg'
 import normal from '~/door/normal.jpg'
 import roughness from '~/door/roughness.jpg'
-// import env from '~/env.png'
 
 // Scene size
 const size = {
@@ -47,7 +46,6 @@ camera.position.z = 5;
 
 const mapP = {
     displacementScale: 0.1,
-
     roughness: 0.6,
     metalness: 0.7,
     normalX: 1,
