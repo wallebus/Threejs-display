@@ -29,3 +29,8 @@ body {
   padding: 5px;
   text-align: center;
 }
+.lil-gui.autoPlace {
+  left: 15px;
+  bottom: 0;
+  top: auto;
+}

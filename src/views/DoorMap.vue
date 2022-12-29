@@ -33,7 +33,7 @@ const aspect = size.width / size.height;
 const canvas = document.querySelector('canvas') || CreateCanvas()
 const renderer = new WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
 renderer.setSize(size.width, size.height)
-renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 3))
 
 const scene = new Scene()
 const camera = new PerspectiveCamera(
@@ -122,7 +122,7 @@ window.addEventListener('resize', () => {
 
 // Init GUI
 const gui = new GUI({ autoPlace: true, width: 200 })
-gui.add(mapP, 'displacementScale').max(2).min(-2).onChange((value: number) => { material.displacementScale = value })
+gui.add(mapP, 'displacementScale').max(2).min(-2).name('displace').onChange((value: number) => { material.displacementScale = value })
 gui.add(mapP, 'metalness').max(2).min(0).onChange((value: number) => { material.metalness = value })
 gui.add(mapP, 'roughness').max(2).min(0).onChange((value: number) => { material.roughness = value })
 gui.add(mapP, 'normalX').max(6).min(-6).onChange((value: number) => { material.normalScale = new Vector2(value, mapP.normalY) })
@@ -148,11 +148,5 @@ h2 {
     text-align: center;
     line-height: 80vh;
     z-index: 2;
-}
-
-.lil-gui.autoPlace {
-    left: 15px;
-    bottom: 0;
-    top: auto
 }
 </style>

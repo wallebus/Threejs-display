@@ -3,9 +3,7 @@ import {
   BoxGeometry,
   Color,
   Mesh,
-  Material,
   MeshBasicMaterial,
-  Object3D,
   OrthographicCamera,
   PerspectiveCamera,
   Scene,
@@ -37,8 +35,8 @@ export function initScene() {
 
   let aspect = Size.width / Size.height;
 
-  const geometry: BufferGeometry = new BoxGeometry(2, 2, 2);
-  const material = new MeshBasicMaterial({
+  let geometry: BufferGeometry = new BoxGeometry(2, 2, 2);
+  let material: any = new MeshBasicMaterial({
     color: new Color("red"),
   });
   const cube = new Mesh(geometry, material);
@@ -102,6 +100,8 @@ export function initScene() {
 
   // 动画函数
   const tick = () => {
+    cube.rotation.x += 0.005;
+    cube.rotation.y += 0.005;
     cube.updateMatrix();
     controls.update();
     renderer.render(scene, camera);
