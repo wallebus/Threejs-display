@@ -64,16 +64,6 @@ function animation() {
 
 animation()
 
-const gui = new GUI({ autoPlace: true, width: 200 })
-
-// Object.getOwnPropertyNames(object) => [0:x, 1:y, 2:z]
-Object.getOwnPropertyNames(camera.position).map((str) => {
-    gui.add(camera.position, str).max(5).min(-5)
-})
-
-onUnmounted(() => {
-    gui.destroy()
-})
 </script>
 
 <template>

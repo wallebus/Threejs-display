@@ -48,7 +48,7 @@ export function initScene() {
     3 * aspect,
     3,
     -3,
-    0.1,
+    0.01,
     100
   );
 
