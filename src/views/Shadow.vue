@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import GUI from "lil-gui";
 import { Clock, Color, DirectionalLight, DirectionalLightHelper, DoubleSide, Mesh, MeshBasicMaterial, MeshStandardMaterial, PlaneGeometry, PointLight, PointLightHelper, SphereGeometry, SpotLight, SpotLightHelper, Vector3 } from "three";
-import { onUnmounted } from "vue";
+import { onUnmounted, reactive, ref, watch } from "vue";
 import { initScene } from "../units/InitScene"
 
 // renderer.shadowMap.enable
@@ -37,27 +37,34 @@ scene.add(plane)
 const lightColor = new Color('AliceBlue')
 
 // 聚光灯 [color,lightInit,distance,angle,锥形衰减，距离衰减量]
-const spotLight = new SpotLight(lightColor, 1, 10, Math.PI / 4, 0, 0.1)
+const spotLight = new SpotLight(lightColor, 1, 15, Math.PI / 4, 0, 0)
 const spotHelp = new SpotLightHelper(spotLight)
 spotLight.position.set(0, 4, 0)
 spotLight.target = world.object
 spotLight.castShadow = true
-spotLight.shadow.mapSize.set(256, 256)
 // spotLight.shadow.focus = 0.1
 
 // 平行光
-const dirLight = new DirectionalLight(lightColor, 0.8)
+const dirLight = new DirectionalLight(lightColor, 1)
 const dirHelper = new DirectionalLightHelper(dirLight)
 dirLight.position.set(2, 2, 1)
 dirLight.castShadow = true
 
 // 点光源
-const pointLight = new PointLight(lightColor, 6, 10, 1)
+const pointLight = new PointLight(lightColor, 1, 10, 0)
 pointLight.castShadow = true
 // pointLight.shadow.radius = 10
+
+const lightIndex = ref(0)
+const Light = reactive([dirLight, spotLight, pointLight])
 const ballLight = new Mesh(new SphereGeometry(0.15), new MeshBasicMaterial({ color: lightColor }))
-ballLight.add(pointLight)
+ballLight.add(Light[lightIndex.value])
 ballLight.position.set(0, 3, 0)
+
+watch(lightIndex, (next, per) => {
+    ballLight.remove(Light[per])
+    ballLight.add(Light[next])
+})
 
 world.scene.add(ballLight)
 world.animation()
@@ -66,8 +73,8 @@ world.animation()
 const clock = new Clock()
 function tick() {
     let time = clock.getElapsedTime()
-    ballLight.position.x = Math.cos(time) * 2
-    ballLight.position.z = Math.sin(time) * 2
+    ballLight.position.x = Math.cos(time) * 3
+    ballLight.position.z = Math.sin(time) * 3
 
     requestAnimationFrame(tick)
 }
@@ -115,5 +122,19 @@ lightCamera.bottom = -shadowCamera.size
 </script>
 
 <template >
+    <div v-for="(light, index) in Light" class="lightType">
+        <label for="">{{ light.type }}</label>
+        <input type="radio" name="light" :value="index" v-model="lightIndex">
+    </div>
 </template >
 
+<style scoped>
+.lightType {
+    display: inline-block;
+    margin-left: 15px;
+}
+
+input {
+    margin-left: 3px;
+}
+</style>
