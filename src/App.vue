@@ -9,12 +9,9 @@ import { toggleDark } from "./units/Dark"
     <div class="wrapper">
       <nav>
         <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/buffer">Buffer</RouterLink>
-        <RouterLink to="/animation">Animation</RouterLink>
         <RouterLink to="/camera">Camera</RouterLink>
         <RouterLink to="/geometry">Geometry</RouterLink>
         <RouterLink to="/datGui">GUI</RouterLink>
-        <RouterLink to="/texture">Texture</RouterLink>
         <RouterLink to="/door">Door</RouterLink>
         <RouterLink to="/shadow">Shadow</RouterLink>
       </nav>

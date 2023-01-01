@@ -21,7 +21,7 @@ export function initScene() {
   const scene = new Scene();
 
   const Size = {
-    width: window.innerWidth * 0.8,
+    width: window.innerWidth,
     height: window.innerHeight * 0.8,
   };
   const canvas = CreateCanvas();
@@ -41,7 +41,7 @@ export function initScene() {
   });
   const cube = new Mesh(geometry, material);
 
-  const perSpective = new PerspectiveCamera(75, aspect, 0.1, 20);
+  const perSpective = new PerspectiveCamera(75, aspect, 0.1, 50);
   // 正交投影 通过定义四个锥面确定可视空间
   const orthoGraphic = new OrthographicCamera(
     -3 * aspect,
@@ -49,7 +49,7 @@ export function initScene() {
     3,
     -3,
     0.01,
-    100
+    50
   );
 
   // 副作用函数
@@ -71,7 +71,7 @@ export function initScene() {
   // watch the window resize
   let resize = () => {
     window.addEventListener("resize", () => {
-      Size.width = window.innerWidth * 0.8;
+      Size.width = window.innerWidth;
       Size.height = window.innerHeight * 0.8;
       // console.log(aspect);
       aspect = Size.width / Size.height;

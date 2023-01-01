@@ -18,7 +18,7 @@ import roughness from '~/door/roughness.jpg'
 
 // Scene size
 const size = {
-    width: window.innerWidth * 0.8,
+    width: window.innerWidth,
     height: window.innerHeight * 0.8,
 }
 const plane = {
@@ -112,7 +112,7 @@ tick()
 // Window resize
 window.addEventListener('resize', () => {
 
-    size.width = window.innerWidth * 0.8;
+    size.width = window.innerWidth;
     size.height = window.innerHeight * 0.8;
     camera.aspect = size.width / size.height;
     camera.updateProjectionMatrix();

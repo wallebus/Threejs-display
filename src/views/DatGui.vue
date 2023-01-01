@@ -32,7 +32,7 @@ const camera = new PerspectiveCamera(
     75,
     aspect,
     0.1,
-    20
+    50
 )
 camera.position.z = 5;
 
