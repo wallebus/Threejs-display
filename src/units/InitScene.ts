@@ -102,7 +102,7 @@ export function initScene() {
   const tick = () => {
     cube.rotation.x += 0.005;
     cube.rotation.y += 0.005;
-    cube.updateMatrix();
+    // cube.updateMatrix();
     controls.update();
     renderer.render(scene, camera);
     requestAnimationFrame(tick);
