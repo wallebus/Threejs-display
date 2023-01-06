@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import App from "@/App.vue";
 import GUI from "lil-gui";
 import { AmbientLight, Clock, Color, DirectionalLight, DirectionalLightHelper, DoubleSide, Group, HemisphereLight, Mesh, MeshBasicMaterial, MeshStandardMaterial, PlaneGeometry, PointLight, PointLightHelper, SphereGeometry, SpotLight, SpotLightHelper, Vector3 } from "three";
 import { onUnmounted, reactive, ref, shallowReactive, watch } from "vue";
@@ -98,7 +99,11 @@ lightCamera.bottom = -shadowCamera.size
 
 // Init GUI
 let dirGUI: GUI
-function initGUI() {
+function initGUI(next: number) {
+    if (next !== 0) {
+        dirGUI.destroy()
+        return
+    };
     dirGUI = new GUI({ autoPlace: true, width: 200 })
     dirGUI.add(shadowCamera, 'far', 1, 7, 0.5).name('shadowFar').onChange((far: number) => {
         lightCamera.far = far
@@ -113,12 +118,12 @@ function initGUI() {
     })
     dirGUI.add(dirLight.shadow, 'radius', 0, 20, 1)
 }
-initGUI()
+initGUI(0)
 onUnmounted(() => {
     dirGUI.destroy()
 })
 const lightIndex = ref(0)
-const lightGroup = shallowReactive([dirGroup, spotGroup, pointGrop])
+const lightGroup = [dirGroup, spotGroup, pointGrop]
 
 
 let currentLight = lightGroup[lightIndex.value]
@@ -127,11 +132,9 @@ watch(lightIndex, (next, per) => {
     scene.remove(lightGroup[per])
     scene.add(lightGroup[next])
     currentLight = lightGroup[next]
-    if (next !== 0) {
-        dirGUI.destroy()
-    } else {
-        initGUI()
-    }
+
+    initGUI(next)
+
 })
 
 scene.add(lightGroup[0], ambLight, hemLight)
@@ -149,12 +152,20 @@ function tick() {
 }
 tick()
 
+function toJumpShare() {
+    window.location.replace('/jump')
+}
+
 </script>
 
 <template >
     <div v-for="(light, index) in lightGroup" class="lightType">
         <label for="">{{ light.children[0].type }}</label>
         <input type="radio" name="light" :value="index" v-model="lightIndex">
+    </div>
+    <div class="shadowMap">
+        <label for="">shadowMap</label>
+        <input type="radio" name="light" :value="3" @change="toJumpShare">
     </div>
 </template >
 
@@ -167,5 +178,10 @@ tick()
 
 input {
     margin-left: 3px;
+}
+
+.shadowMap {
+    display: inline-block;
+    left: 10px;
 }
 </style>

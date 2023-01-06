@@ -49,6 +49,16 @@ const router = createRouter({
       name: "shadow",
       component: () => import("../views/Shadow.vue"),
     },
+    {
+      path: "/jump",
+      name: "jump",
+      component: () => import("../views/JumpShare.vue"),
+    },
+    {
+      path: "/house",
+      name: "house",
+      component: () => import("../views/SpookHouse.vue"),
+    },
   ],
 });
 
