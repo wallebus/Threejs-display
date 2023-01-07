@@ -127,7 +127,7 @@ gui.add(mapP, 'metalness').max(2).min(0).onChange((value: number) => { material.
 gui.add(mapP, 'roughness').max(2).min(0).onChange((value: number) => { material.roughness = value })
 gui.add(mapP, 'normalX').max(6).min(-6).onChange((value: number) => { material.normalScale = new Vector2(value, mapP.normalY) })
 gui.add(mapP, 'normalY').max(6).min(-6).onChange((value: number) => { material.normalScale = new Vector2(mapP.normalX, value) })
-gui.add(mapP, 'aoMapIntensity').max(1).min(0).onChange((value: number) => { material.aoMapIntensity = value })
+gui.add(mapP, 'aoMapIntensity').max(2).min(0).onChange((value: number) => { material.aoMapIntensity = value })
 
 gui.add(mesh.rotation, 'y').max(Math.PI / 4).min(-Math.PI / 4).name('rotation.y')
 onUnmounted(() => {

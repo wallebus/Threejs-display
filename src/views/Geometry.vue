@@ -7,11 +7,11 @@ import { useStorage } from "@vueuse/core"
 
 const Init = initScene()
 
-const Box = new BoxGeometry(2, 2, 2, 4, 4, 4)
-const Sphere = new SphereGeometry(2, 16, 16)
+const Box = new BoxGeometry(2, 2, 2)
+const Sphere = new SphereGeometry(2, 12, 12)
 const Circle = new CircleGeometry(3, 12, 0, Math.PI * 1.5)
-const Cylinder = new CylinderGeometry(1.5, 1.5, 3.5, 32, 3)
-const Torus = new TorusGeometry(2, 0.5, 26, 20)
+const Cylinder = new CylinderGeometry(1.5, 1.5, 3.5, 16, 2)
+const Torus = new TorusGeometry(2, 0.5, 6, 8)
 const Octahearon = new OctahedronGeometry(2, 1)
 
 Init.material.wireframe = true
