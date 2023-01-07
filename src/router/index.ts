@@ -59,6 +59,11 @@ const router = createRouter({
       name: "house",
       component: () => import("../views/SpookHouse.vue"),
     },
+    {
+      path: "/point",
+      name: "point",
+      component: () => import("../views/PointGeo.vue"),
+    },
   ],
 });
 

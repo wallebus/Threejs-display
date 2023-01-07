@@ -62,7 +62,8 @@ grassRough.wrapT = RepeatWrapping
 const progress = ref("LOADING")
 const loadState = ref(1)
 manager.onProgress = (url, loaded, total) => {
-    progress.value = url + ' progress:' + loaded / total * 100
+    progress.value = `${url} ${Math.floor(loaded / total * 100)}%`
+    console.log(progress.value)
     if (loaded === total) {
         loadState.value = 0
     }
@@ -223,7 +224,7 @@ function setUv2(array: Array<Mesh>) {
 </script>
 
 <template >
-    <h1 v-if="loadState">{{ progress }}</h1>
+    <h1 v-if="loadState" style=" opacity: 0.8;">{{ progress }}</h1>
 </template>
 
 <style>

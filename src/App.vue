@@ -15,6 +15,7 @@ import { toggleDark } from "./units/Dark"
         <RouterLink to="/door">Door</RouterLink>
         <RouterLink to="/shadow">Shadow</RouterLink>
         <RouterLink to="/house">House</RouterLink>
+        <RouterLink to="/point">Point</RouterLink>
       </nav>
     </div>
 

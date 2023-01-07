@@ -72,7 +72,7 @@ let controls: OrbitControls;
 
 function cameraChange() {
   camera = Cameras[checked.value];
-  camera.position.z = 5;
+  camera.position.set(0, 2, 5)
   camera.lookAt(cube.position);
 
   controls = new OrbitControls(camera, canvas);
@@ -101,17 +101,14 @@ watch(Size, changeAspect);
 onMounted(() => {
   scene.add(cube, camera);
 
+  const clock = new Clock()
   const tick = () => {
-    // console.log(camera);
-    // camera.position.set(cursor.x, cursor.y, 3);
-    // camera.position.x = cursor.x * 5;
-    // camera.position.y = cursor.y * 5;
-    controls.update();
-    // camera.updateMatrixWorld();
-    // cube.quaternion.set()
-    // cube.rotation.y = clock.getElapsedTime();
-    renderer.render(scene, camera);
+    const time = clock.getElapsedTime()
+    // cube.rotation.x += 0.005
+    cube.rotation.y += 0.005
 
+    controls.update();
+    renderer.render(scene, camera);
     requestAnimationFrame(tick);
   };
   tick();
