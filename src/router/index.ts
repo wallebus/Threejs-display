@@ -15,7 +15,7 @@ const router = createRouter({
     {
       path: "/animation",
       name: "animation",
-      component: () => import("../views/Animation.vue"),
+      component: () => import("../views/hide/Animation.vue"),
     },
     {
       path: "/camera",
@@ -36,7 +36,7 @@ const router = createRouter({
     {
       path: "/texture",
       name: "texture",
-      component: () => import("../views/Texture.vue"),
+      component: () => import("../views/hide/Texture.vue"),
     },
 
     {
@@ -52,7 +52,7 @@ const router = createRouter({
     {
       path: "/jump",
       name: "jump",
-      component: () => import("../views/JumpShare.vue"),
+      component: () => import("../views/hide/JumpShare.vue"),
     },
     {
       path: "/house",

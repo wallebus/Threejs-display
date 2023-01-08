@@ -1,6 +1,8 @@
 <script lang="ts" setup>
 import { CreateCanvas } from '@/units/CreateCanvas';
-import { AmbientLight, BoxGeometry, Color, ConeGeometry, DirectionalLight, Float32BufferAttribute, Fog, Group, LoadingManager, Mesh, MeshStandardMaterial, PerspectiveCamera, PlaneGeometry, PointLight, PointLightHelper, Points, PointsMaterial, Scene, ShapeGeometry, SphereGeometry, TextureLoader, WebGLRenderer } from 'three';
+import {
+    AmbientLight, BoxGeometry, Color, DirectionalLight, Float32BufferAttribute, Group, LoadingManager, Mesh, MeshStandardMaterial, PerspectiveCamera, PlaneGeometry, PointLight, PointLightHelper, Points, PointsMaterial, Scene, SphereGeometry, TextureLoader, WebGLRenderer
+} from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
 const size = {
@@ -46,6 +48,8 @@ window.addEventListener('resize', () => {
 
 </template>
 
+
 <style>
 
-</style>
+
+
