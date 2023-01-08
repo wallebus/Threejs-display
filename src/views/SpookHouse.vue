@@ -195,7 +195,8 @@ function setUv2(array: Array<Mesh>) {
 
 function loadTexture(urlObject: any, textureLoader: TextureLoader) {
     let object = {} as any
-    for (const [key, value] of Object.entries(urlObject)) {
+    for (const key in urlObject) {
+        const value = urlObject[key]
         object[key.substring(key.lastIndexOf('/') + 1, key.lastIndexOf('.'))] = textureLoader.load((value as any).default)
     }
     return object
