@@ -11,6 +11,7 @@ import textTexture8 from '~/text/8.png';
 
 import { onMounted } from 'vue';
 import gsap from 'gsap';
+import { objectPick } from '@vueuse/core';
 
 // let parser = new ("user-agent")
 const size = {
@@ -125,6 +126,7 @@ const tick = (() => {
   requestAnimationFrame(tick)
 })
 tick()
+
 
 </script>
 

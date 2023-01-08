@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { AmbientLight, BackSide, Color, DirectionalLight, DoubleSide, FrontSide, HemisphereLight, LinearMipMapLinearFilter, LoadingManager, MeshBasicMaterial, MeshStandardMaterial, MirroredRepeatWrapping, NearestFilter, RepeatWrapping, Texture, TextureLoader } from "three";
-import { initScene } from "../units/InitScene"
+import { initScene } from "../../units/InitScene"
 import img1 from "~/texture-background.jpg"
 // import img2 from "~/texture-metal.png"
 import { ref } from "vue";

@@ -1,69 +1,41 @@
 <script lang="ts" setup>
 import { CreateCanvas } from '@/units/CreateCanvas';
-import { AmbientLight, BoxGeometry, Color, ConeGeometry, DirectionalLight, Float32BufferAttribute, Fog, Group, LoadingManager, Mesh, MeshStandardMaterial, PerspectiveCamera, PlaneGeometry, PointLight, PointLightHelper, Scene, ShapeGeometry, SphereGeometry, TextureLoader, WebGLRenderer } from 'three';
+import { AmbientLight, BoxGeometry, Color, ConeGeometry, DirectionalLight, Float32BufferAttribute, Fog, Group, LoadingManager, Mesh, MeshStandardMaterial, PerspectiveCamera, PlaneGeometry, PointLight, PointLightHelper, Scene, SphereGeometry, TextureLoader, WebGLRenderer } from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
-
-import doorColorPic from '~/door/color.jpg'
-import doorAlphaPic from '~/door/alpha.jpg'
-import doorAOPic from '~/door/AO.jpg'
-import doorHeightPic from '~/door/height.jpg'
-import doorMetalPic from '~/door/metalness.jpg'
-import doorNormalPic from '~/door/normal.jpg'
-import doorRoughPic from '~/door/roughness.jpg'
-
-import bricksColorPic from '~/bricks/color.jpg'
-import bricksAOPic from '~/bricks/AO.jpg'
-import bricksNormalPic from '~/bricks/normal.jpg'
-import bricksRoughPic from '~/bricks/roughness.jpg'
-
-import grassColorPic from '~/grass/color.jpg'
-import grassAOPic from '~/grass/AO.jpg'
-import grassNormalPic from '~/grass/normal.jpg'
-import grassRoughnessPic from '~/grass/roughness.jpg'
 import { RepeatWrapping } from 'three';
 import { ref } from 'vue';
 
-// Texture
+const bricksUrls = import.meta.glob('../assets/bricks/*.jpg', { eager: true })
+const doorUrls = import.meta.glob('../assets/door/*.jpg', { eager: true })
+const grassUrls = import.meta.glob('../assets/grass/*.jpg', { eager: true })
+
+// Texture load
 const manager = new LoadingManager()
 const textureLoader = new TextureLoader(manager)
 
-const doorColor = textureLoader.load(doorColorPic)
-const doorAO = textureLoader.load(doorAOPic)
-const doorHeigh = textureLoader.load(doorHeightPic)
-const doorMetal = textureLoader.load(doorMetalPic)
-const doorRough = textureLoader.load(doorRoughPic)
-const doorNormal = textureLoader.load(doorNormalPic)
-const doorAlpha = textureLoader.load(doorAlphaPic)
+const bricksTexture = loadTexture(bricksUrls, textureLoader)
+const grassTexture = loadTexture(grassUrls, textureLoader)
+const doorTexture = loadTexture(doorUrls, textureLoader)
 
-const bricksColor = textureLoader.load(bricksColorPic)
-const bricksAO = textureLoader.load(bricksAOPic)
-const bricksNormal = textureLoader.load(bricksNormalPic)
-const bricksRough = textureLoader.load(bricksRoughPic)
+grassTexture.color.repeat.set(8, 8)
+grassTexture.AO.repeat.set(8, 8)
+grassTexture.normal.repeat.set(8, 8)
+grassTexture.roughness.repeat.set(8, 8)
 
-const grassColor = textureLoader.load(grassColorPic)
-const grassAO = textureLoader.load(grassAOPic)
-const grassNormal = textureLoader.load(grassNormalPic)
-const grassRough = textureLoader.load(grassRoughnessPic)
+grassTexture.color.wrapS = RepeatWrapping
+grassTexture.AO.wrapS = RepeatWrapping
+grassTexture.normal.wrapS = RepeatWrapping
+grassTexture.roughness.wrapS = RepeatWrapping
 
-grassColor.repeat.set(8, 8)
-grassAO.repeat.set(8, 8)
-grassNormal.repeat.set(8, 8)
-grassRough.repeat.set(8, 8)
-grassColor.wrapS = RepeatWrapping
-grassAO.wrapS = RepeatWrapping
-grassNormal.wrapS = RepeatWrapping
-grassRough.wrapS = RepeatWrapping
-
-grassColor.wrapT = RepeatWrapping
-grassAO.wrapT = RepeatWrapping
-grassNormal.wrapT = RepeatWrapping
-grassRough.wrapT = RepeatWrapping
+grassTexture.roughness.wrapT = RepeatWrapping
+grassTexture.normal.wrapT = RepeatWrapping
+grassTexture.AO.wrapT = RepeatWrapping
+grassTexture.color.wrapT = RepeatWrapping
 
 const progress = ref("LOADING")
 const loadState = ref(1)
 manager.onProgress = (url, loaded, total) => {
     progress.value = `${url} ${Math.floor(loaded / total * 100)}%`
-    console.log(progress.value)
     if (loaded === total) {
         loadState.value = 0
     }
@@ -94,21 +66,21 @@ renderer.setPixelRatio(Math.min(2, window.devicePixelRatio))
 const floor = new Mesh(
     new PlaneGeometry(19, 19),
     new MeshStandardMaterial({
-        map: grassColor,
-        aoMap: grassAO,
+        map: grassTexture.color,
+        aoMap: grassTexture.AO,
         aoMapIntensity: 2,
-        roughnessMap: grassRough,
+        roughnessMap: grassTexture.roughness,
         roughness: 1,
-        normalMap: grassNormal,
+        normalMap: grassTexture.normal
     })
 )
 const walls = new Mesh(
     new BoxGeometry(4, 2.5, 4),
     new MeshStandardMaterial({
-        map: bricksColor,
-        normalMap: bricksNormal,
-        roughnessMap: bricksRough,
-        aoMap: bricksAO
+        map: bricksTexture.color,
+        normalMap: bricksTexture.normal,
+        roughnessMap: bricksTexture.roughness,
+        aoMap: bricksTexture.AO
     })
 )
 const roof = new Mesh(
@@ -118,15 +90,15 @@ const roof = new Mesh(
 const door = new Mesh(
     new PlaneGeometry(2, 2.2, 32, 32),
     new MeshStandardMaterial({
-        map: doorColor,
-        aoMap: doorAO,
-        displacementMap: doorHeigh,
+        map: doorTexture.color,
+        aoMap: doorTexture.AO,
+        displacementMap: doorTexture.height,
         displacementScale: 0.1,
-        roughnessMap: doorRough,
+        roughnessMap: doorTexture.roughness,
         roughness: 0.8,
-        metalnessMap: doorMetal,
-        normalMap: doorNormal,
-        alphaMap: doorAlpha,
+        metalnessMap: doorTexture.metalness,
+        normalMap: doorTexture.normal,
+        alphaMap: doorTexture.alpha,
         transparent: true,
     })
 )
@@ -183,7 +155,7 @@ ground.castShadow = true
 house.castShadow = true
 
 // ———— Light group ————
-const pointLight = new PointLight(new Color('#ff7d46'), 1, 8)
+const pointLight = new PointLight(new Color('#ff7d46'), 1, 10)
 const pointHelper = new PointLightHelper(pointLight, 0.2, pointLight.color)
 const sunLight = new DirectionalLight(new Color("#b9d5ff"), 0.3)
 const ambientLight = new AmbientLight(new Color("#b9d5ff"), 0.15)
@@ -219,6 +191,14 @@ function setUv2(array: Array<Mesh>) {
     array.map((target) => {
         target.geometry.setAttribute('uv2', new Float32BufferAttribute(target.geometry.attributes.uv.array, 2))
     })
+}
+
+function loadTexture(urlObject: any, textureLoader: TextureLoader) {
+    let object = {} as any
+    for (const [key, value] of Object.entries(urlObject)) {
+        object[key.substring(key.lastIndexOf('/') + 1, key.lastIndexOf('.'))] = textureLoader.load((value as any).default)
+    }
+    return object
 }
 
 </script>

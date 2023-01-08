@@ -13,7 +13,7 @@ import {
   Scene,
   WebGLRenderer,
 } from "three";
-import { CreateCanvas } from "../units/CreateCanvas";
+import { CreateCanvas } from "../../units/CreateCanvas";
 import gsap from "gsap";
 const scene = new Scene();
 
