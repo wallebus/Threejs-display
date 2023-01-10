@@ -62,7 +62,12 @@ const router = createRouter({
     {
       path: "/point",
       name: "point",
-      component: () => import("../views/PointGeo.vue"),
+      component: () => import("../views/Particle.vue"),
+    },
+    {
+      path: "/raycaster",
+      name: "raycaster",
+      component: () => import("../views/Raycaster.vue"),
     },
   ],
 });

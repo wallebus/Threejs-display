@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { CreateCanvas } from '@/units/CreateCanvas';
-import { AmbientLight, BoxGeometry, Color, ConeGeometry, DirectionalLight, Float32BufferAttribute, Fog, Group, LoadingManager, Mesh, MeshStandardMaterial, PerspectiveCamera, PlaneGeometry, PointLight, PointLightHelper, Scene, SphereGeometry, TextureLoader, WebGLRenderer } from 'three';
+import { AmbientLight, BoxGeometry, Color, ConeGeometry, DirectionalLight, DirectionalLightHelper, DoubleSide, Float32BufferAttribute, Fog, FrontSide, Group, LoadingManager, Mesh, MeshStandardMaterial, PCFSoftShadowMap, PerspectiveCamera, PlaneGeometry, PointLight, PointLightHelper, Scene, SphereGeometry, TextureLoader, WebGLRenderer } from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { RepeatWrapping } from 'three';
 import { ref } from 'vue';
@@ -8,6 +8,8 @@ import { ref } from 'vue';
 const bricksUrls = import.meta.glob('../assets/bricks/*.jpg', { eager: true })
 const doorUrls = import.meta.glob('../assets/door/*.jpg', { eager: true })
 const grassUrls = import.meta.glob('../assets/grass/*.jpg', { eager: true })
+// const roofUrls = import.meta.glob('../assets/roof/*.jpg', { eager: true })
+
 
 // Texture load
 const manager = new LoadingManager()
@@ -16,21 +18,15 @@ const textureLoader = new TextureLoader(manager)
 const bricksTexture = loadTexture(bricksUrls, textureLoader)
 const grassTexture = loadTexture(grassUrls, textureLoader)
 const doorTexture = loadTexture(doorUrls, textureLoader)
+// const roofTexture = loadTexture(roofUrls, textureLoader)
 
-grassTexture.color.repeat.set(8, 8)
-grassTexture.AO.repeat.set(8, 8)
-grassTexture.normal.repeat.set(8, 8)
-grassTexture.roughness.repeat.set(8, 8)
+Object.keys(grassTexture).forEach(texture => {
+    grassTexture[texture].repeat.set(8, 8)
+    grassTexture[texture].wrapS = RepeatWrapping
+    grassTexture[texture].wrapT = RepeatWrapping
+})
 
-grassTexture.color.wrapS = RepeatWrapping
-grassTexture.AO.wrapS = RepeatWrapping
-grassTexture.normal.wrapS = RepeatWrapping
-grassTexture.roughness.wrapS = RepeatWrapping
 
-grassTexture.roughness.wrapT = RepeatWrapping
-grassTexture.normal.wrapT = RepeatWrapping
-grassTexture.AO.wrapT = RepeatWrapping
-grassTexture.color.wrapT = RepeatWrapping
 
 const progress = ref("LOADING")
 const loadState = ref(1)
@@ -58,6 +54,8 @@ camera.position.set(0, 5, 8)
 scene.fog = fog
 renderer.setClearColor('#262837', 0.9)
 renderer.shadowMap.enabled = true
+renderer.shadowMap.type = PCFSoftShadowMap
+renderer.physicallyCorrectLights = true
 renderer.setSize(size.width(), size.height())
 renderer.setPixelRatio(Math.min(2, window.devicePixelRatio))
 
@@ -70,7 +68,7 @@ const floor = new Mesh(
         aoMap: grassTexture.AO,
         aoMapIntensity: 2,
         roughnessMap: grassTexture.roughness,
-        roughness: 1,
+        roughness: 1.2,
         normalMap: grassTexture.normal
     })
 )
@@ -84,8 +82,16 @@ const walls = new Mesh(
     })
 )
 const roof = new Mesh(
-    new ConeGeometry(3.5, 1, 4),
-    new MeshStandardMaterial({ color: '#b35f45' })
+    new ConeGeometry(3.5, 1, 4,),
+    new MeshStandardMaterial({
+        color: new Color('rgb(100,40,40)'),
+        roughness: 2
+        // map: roofTexture.color,
+        // aoMap: roofTexture.AO,
+        // displacementMap: roofTexture.height,
+        // roughnessMap: roofTexture.rough,
+        // normalMap: roofTexture.normal,
+    })
 )
 const door = new Mesh(
     new PlaneGeometry(2, 2.2, 32, 32),
@@ -95,7 +101,7 @@ const door = new Mesh(
         displacementMap: doorTexture.height,
         displacementScale: 0.1,
         roughnessMap: doorTexture.roughness,
-        roughness: 0.8,
+        roughness: 0.9,
         metalnessMap: doorTexture.metalness,
         normalMap: doorTexture.normal,
         alphaMap: doorTexture.alpha,
@@ -151,20 +157,28 @@ const ground = new Group()
 const house = new Group()
 ground.add(floor, bush, bush1, bush2, bush3, graves)
 house.add(walls, roof, door)
-ground.castShadow = true
-house.castShadow = true
+walls.castShadow = true
+roof.castShadow = true
 
 // ———— Light group ————
-const pointLight = new PointLight(new Color('#ff7d46'), 1, 10)
-const pointHelper = new PointLightHelper(pointLight, 0.2, pointLight.color)
-const sunLight = new DirectionalLight(new Color("#b9d5ff"), 0.3)
+const pointLight = new PointLight(new Color('#ff7d46'), 3, 8, 1)
+const moonLight = new DirectionalLight(new Color("#b9d5ff"), 0.5)
 const ambientLight = new AmbientLight(new Color("#b9d5ff"), 0.15)
 const lightGroup = new Group()
 
-sunLight.position.set(6, 6, 0)
+moonLight.position.set(6, 6, 0)
 pointLight.position.set(0, 2, 2.5)
-lightGroup.add(pointLight, ambientLight, sunLight)
-lightGroup.castShadow = true
+lightGroup.add(pointLight, ambientLight, moonLight)
+
+moonLight.castShadow = true
+moonLight.shadow.radius = 3
+moonLight.shadow.camera.far = 10
+moonLight.shadow.mapSize.set(128, 128)
+
+pointLight.castShadow = true
+pointLight.shadow.radius = 3
+pointLight.shadow.mapSize.set(256, 256)
+pointLight.shadow.camera.far = 6
 
 // ————— Render scene ———————
 scene.add(ground, house, camera, lightGroup)
@@ -214,7 +228,7 @@ h1 {
     height: 100%;
     width: 80%;
     text-align: center;
-    line-height: 80vh;
-    z-index: 2;
+    line-height: 70vh;
+    z-index: 1;
 }
 </style>
