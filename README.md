@@ -1,5 +1,5 @@
 # jounery
-        [Live Demo](https://threejs-demo.netlify.app)
+[Live Demo](https://threejs-demo.netlify.app)
 
 ## Recommended IDE Setup
 
