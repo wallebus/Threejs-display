@@ -77,6 +77,7 @@ function raycasterChange() {
 
     intersects.map(intersect => {
         (intersect.object.material as MeshBasicMaterial).color.set('#000fff')
+
     })
 
     spheres.map(sphere => {
