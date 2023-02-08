@@ -26,8 +26,6 @@ Object.keys(grassTexture).forEach(texture => {
     grassTexture[texture].wrapT = RepeatWrapping
 })
 
-
-
 const progress = ref("LOADING")
 const loadState = ref(1)
 manager.onProgress = (url, loaded, total) => {

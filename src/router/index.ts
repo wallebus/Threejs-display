@@ -60,14 +60,9 @@ const router = createRouter({
       component: () => import("../views/SpookHouse.vue"),
     },
     {
-      path: "/point",
-      name: "point",
-      component: () => import("../views/Particle.vue"),
-    },
-    {
-      path: "/raycaster",
-      name: "raycaster",
-      component: () => import("../views/Raycaster.vue"),
+      path: "/models",
+      name: "models",
+      component: () => import("../views/Models.vue"),
     },
   ],
 });

@@ -6,6 +6,7 @@ overrides:
 specifiers:
   '@rushstack/eslint-patch': ^1.1.4
   '@types/node': ^16.11.56
+  '@types/stats.js': ^0.17.0
   '@types/three': ^0.144.0
   '@types/ua-parser-js': ^0.7.36
   '@vitejs/plugin-vue': ^3.0.3
@@ -22,6 +23,7 @@ specifiers:
   npm-run-all: ^4.1.5
   postcss-pxtorem: ^6.0.0
   prettier: ^2.7.1
+  stats.js: ^0.17.0
   three: ^0.144.0
   typescript: 4.9.4
   ua-parser-js: ^1.0.32
@@ -33,6 +35,7 @@ specifiers:
   vue-tsc: ^0.40.7
 
 dependencies:
+  '@types/stats.js': 0.17.0
   '@types/three': 0.144.0
   '@vueuse/components': 9.4.0_vue@3.2.39
   '@vueuse/core': 9.4.0_vue@3.2.39
@@ -40,6 +43,7 @@ dependencies:
   gsap: 3.11.2
   lil-gui: 0.17.0
   postcss-pxtorem: 6.0.0
+  stats.js: 0.17.0
   three: 0.144.0
   ua-parser-js: 1.0.32
   vue: 3.2.39
@@ -456,6 +460,10 @@ packages:
     dependencies:
       '@types/node': 16.11.62
     dev: true
+
+  /@types/stats.js/0.17.0:
+    resolution: {integrity: sha512-9w+a7bR8PeB0dCT/HBULU2fMqf6BAzvKbxFboYhmDtDkKPiyXYbjoe2auwsXlEFI7CFNMF1dCv3dFH5Poy9R1w==}
+    dev: false
 
   /@types/svgo/2.6.4:
     resolution: {integrity: sha512-l4cmyPEckf8moNYHdJ+4wkHvFxjyW6ulm9l4YGaOxeyBWPhBOT0gvni1InpFPdzx1dKf/2s62qGITwxNWnPQng==}
@@ -3860,6 +3868,10 @@ packages:
     resolution: {integrity: sha512-ji9qxRnOVfcuLDySj9qzhGSEFVobyt1kIOSkj1qZzYLzq7Tos/oUUWvotUPQLlrsidqsK6tBH89Bc9kL5zHA6w==}
     deprecated: 'Modern JS already guarantees Array#sort() is a stable sort, so this library is deprecated. See the compatibility table on MDN: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort#browser_compatibility'
     dev: true
+
+  /stats.js/0.17.0:
+    resolution: {integrity: sha512-hNKz8phvYLPEcRkeG1rsGmV5ChMjKDAWU7/OJJdDErPBNChQXxCo3WZurGpnWc6gZhAzEPFad1aVgyOANH1sMw==}
+    dev: false
 
   /strict-uri-encode/1.1.0:
     resolution: {integrity: sha512-R3f198pcvnB+5IpnBlRkphuE9n46WyVl8I39W/ZUTZLz4nqSP/oLYUrcnJrw462Ds8he4YKMov2efsTIw1BDGQ==}

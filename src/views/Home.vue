@@ -5,15 +5,12 @@ import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js';
 import { Clock, Color, Fog, Group, Mesh, MeshBasicMaterial, MeshDepthMaterial, MeshMatcapMaterial, MeshNormalMaterial, MeshToonMaterial, PerspectiveCamera, PointLight, Scene, TextureLoader, TorusGeometry, Vector3, WebGLRenderer } from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { CreateCanvas } from '@/units/CreateCanvas';
-import ua from 'ua-parser-js'
 import textTexture8 from '~/text/8.png';
 
 
 import { onMounted } from 'vue';
 import gsap from 'gsap';
-import { objectPick } from '@vueuse/core';
 
-// let parser = new ("user-agent")
 const size = {
   width: window.innerWidth,
   height: window.innerHeight * 0.8,
@@ -111,6 +108,7 @@ onMounted(() => {
     }
   };
   tick();
+
 })
 
 const clock = new Clock()
@@ -126,7 +124,6 @@ const tick = (() => {
   requestAnimationFrame(tick)
 })
 tick()
-
 
 </script>
 
