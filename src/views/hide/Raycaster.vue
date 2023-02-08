@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { CreateCanvas } from '@/units/CreateCanvas';
-import { AxesHelper, Clock, Color, Group, Mesh, MeshBasicMaterial, Object3D, ObjectLoader, PerspectiveCamera, Raycaster, Scene, SphereGeometry, Vector2, Vector3, WebGLRenderer } from 'three';
+import { AxesHelper, Clock, Color, Group, Material, Mesh, MeshBasicMaterial, Object3D, ObjectLoader, PerspectiveCamera, Raycaster, Scene, SphereGeometry, Vector2, Vector3, WebGLRenderer } from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
 // Init
@@ -76,7 +76,7 @@ function raycasterChange() {
     const intersects = raycaster.intersectObjects(spheres)
 
     intersects.map(intersect => {
-        intersect.object.material.color.set('#0000ff');
+        (intersect.object.material as MeshBasicMaterial).color.set('#000fff')
     })
 
     spheres.map(sphere => {

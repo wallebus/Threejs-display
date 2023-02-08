@@ -8,7 +8,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js'
 import duck from '~/models/Duck/glTF/Duck.gltf?url'
 import fox from '~/models/Fox/glTF/Fox.gltf?url'
-import draco from '~/draco/?url'
+// import draco from '~/draco'
 import GUI from 'lil-gui';
 
 const size = {
@@ -33,7 +33,7 @@ plane.receiveShadow = true
 
 const gltfLoader = new GLTFLoader()
 const dracoLoader = new DRACOLoader()
-dracoLoader.setDecoderPath(draco)
+// dracoLoader.setDecoderPath(draco)
 gltfLoader.setDRACOLoader(dracoLoader)
 
 let mixer: AnimationMixer
