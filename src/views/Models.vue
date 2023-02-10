@@ -8,8 +8,11 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js'
 import duck from '~/models/Duck/glTF/Duck.gltf?url'
 import fox from '~/models/Fox/glTF/Fox.gltf?url'
+import flightHelmet from '~/models/FlightHelmet/glTF/FlightHelmet.gltf?url'
 // import draco from '~/draco'
 import GUI from 'lil-gui';
+import Stats from 'stats.js';
+import { onBeforeUnmount, onMounted, onUnmounted } from 'vue';
 
 const size = {
     width() { return window.innerWidth },
@@ -40,6 +43,7 @@ let mixer: AnimationMixer
 let action
 gltfLoader.load(fox, (fox) => {
     fox.scene.scale.set(0.05, 0.05, 0.05,)
+
     scene.add(fox.scene)
     fox.scene.children[0].castShadow = true
     mixer = new AnimationMixer(fox.scene)
@@ -47,17 +51,37 @@ gltfLoader.load(fox, (fox) => {
     action.play()
 })
 
+// Mesh 加载场景
+// gltfLoader.load(flightHelmet, (model) => {
+//     const children = model.scene.children
+
+//     while (children.length) {
+//         scene.add(children[0])
+//         console.log(children);
+//     }
+// })
+
 renderer.shadowMap.enabled = true
 renderer.physicallyCorrectLights = true
 renderer.setSize(size.width(), size.height())
 renderer.setPixelRatio(Math.min(2, window.devicePixelRatio))
 scene.add(camera, amLight, directLight, plane)
 
+
+let stats: Stats
+stats = new Stats()
+stats.showPanel(0)
+document.body.appendChild(stats.dom)
+onBeforeUnmount(() => {
+    document.body.removeChild(stats.dom)
+})
+
 const clock = new Clock()
 let perElapsedTime = 0
 animate()
 
 function animate() {
+    stats.begin()
     const elapsedTime = clock.getElapsedTime()
     const deltaTime = elapsedTime - perElapsedTime
     perElapsedTime = elapsedTime
@@ -68,6 +92,7 @@ function animate() {
     control.update()
     renderer.render(scene, camera)
     requestAnimationFrame(animate)
+    stats.end()
 }
 
 window.addEventListener('resize', () => {

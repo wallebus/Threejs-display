@@ -1,4 +1,4 @@
-import { onBeforeUnmount } from "vue";
+import { onBeforeUnmount, onUnmounted } from "vue";
 
 function CreateCanvas() {
   const canvas = document.createElement("canvas");
