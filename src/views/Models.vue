@@ -1,15 +1,15 @@
 <script lang="ts" setup>
-import { CreateCanvas } from '@/units/CreateCanvas';
 import {
     AmbientLight, AnimationMixer, BoxGeometry, Clock, Color, DirectionalLight, Float32BufferAttribute, Group, LoadingManager, Mesh, MeshBasicMaterial, MeshStandardMaterial, PerspectiveCamera, PlaneGeometry, PointLight, PointLightHelper, Points, PointsMaterial, Scene, SphereGeometry, TextureLoader, WebGLRenderer
 } from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js'
-import duck from '~/models/Duck/glTF/Duck.gltf?url'
-import fox from '~/models/Fox/glTF/Fox.gltf?url'
-// import draco from '~/draco'
-import GUI from 'lil-gui';
+import Stats from 'stats.js';
+import { onBeforeUnmount, } from 'vue';
+
+import { CreateCanvas } from '@/units/CreateCanvas';
+import fox from '../../public/models/Fox/glTF-Binary/Fox.glb?url'
 
 const size = {
     width() { return window.innerWidth },
@@ -40,6 +40,7 @@ let mixer: AnimationMixer
 let action
 gltfLoader.load(fox, (fox) => {
     fox.scene.scale.set(0.05, 0.05, 0.05,)
+
     scene.add(fox.scene)
     fox.scene.children[0].castShadow = true
     mixer = new AnimationMixer(fox.scene)
@@ -47,17 +48,37 @@ gltfLoader.load(fox, (fox) => {
     action.play()
 })
 
+// Mesh 加载场景
+// gltfLoader.load(flightHelmet, (model) => {
+//     const children = model.scene.children
+
+//     while (children.length) {
+//         scene.add(children[0])
+//         console.log(children);
+//     }
+// })
+
 renderer.shadowMap.enabled = true
 renderer.physicallyCorrectLights = true
 renderer.setSize(size.width(), size.height())
 renderer.setPixelRatio(Math.min(2, window.devicePixelRatio))
 scene.add(camera, amLight, directLight, plane)
 
+
+let stats: Stats
+stats = new Stats()
+stats.showPanel(0)
+document.body.appendChild(stats.dom)
+onBeforeUnmount(() => {
+    document.body.removeChild(stats.dom)
+})
+
 const clock = new Clock()
 let perElapsedTime = 0
 animate()
 
 function animate() {
+    stats.begin()
     const elapsedTime = clock.getElapsedTime()
     const deltaTime = elapsedTime - perElapsedTime
     perElapsedTime = elapsedTime
@@ -68,6 +89,7 @@ function animate() {
     control.update()
     renderer.render(scene, camera)
     requestAnimationFrame(animate)
+    stats.end()
 }
 
 window.addEventListener('resize', () => {
