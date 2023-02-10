@@ -11,6 +11,7 @@ import { onBeforeUnmount, } from 'vue';
 import { CreateCanvas } from '@/units/CreateCanvas';
 import fox from '../../public/models/Fox/glTF-Binary/Fox.glb?url'
 
+
 const size = {
     width() { return window.innerWidth },
     height() { return window.innerHeight * 0.8 },
