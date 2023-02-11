@@ -81,6 +81,9 @@ scene.fog = new Fog(new Color('blue'))
 renderer.setSize(size.width, size.height)
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 
+const clock = new Clock()
+gsapAnimation()
+tick()
 
 window.addEventListener('resize', () => {
   size.width = window.innerWidth;
@@ -91,40 +94,23 @@ window.addEventListener('resize', () => {
   renderer.setSize(size.width, size.height)
 }, false)
 
-onMounted(() => {
-  let animationId;
+function gsapAnimation() {
   gsap.from(camera.position, { delay: 0, z: 100, x: 100 })
-  gsap.to(camera.position, { duration: 1, delay: 0, z: 4, x: 0 });
-
   gsap.from(camera.rotation, { delay: 0, x: -Math.PI / 2 });
+
+  gsap.to(camera.position, { duration: 1.2, delay: 0, z: 4, x: 0 });
   gsap.to(camera.rotation, { duration: 1, delay: 0, x: 0 });
+}
 
-  const tick = () => {
-    renderer.render(scene, camera);
-    animationId = requestAnimationFrame(tick);
-
-    if (camera.position.z === 5) {
-      cancelAnimationFrame(animationId);
-    }
-  };
-  tick();
-
-})
-
-const clock = new Clock()
-const tick = (() => {
+function tick() {
   const time = clock.getElapsedTime()
   group.rotation.x = Math.sin(time / 4) * 2
   group.rotation.y = Math.cos(time / 4) * 2
 
-  // text.rotation.x = Math.sin(time / 4) * 2
-  // text.rotation.y = Math.sin(time / 4) * 2
   control.update()
   renderer.render(scene, camera)
   requestAnimationFrame(tick)
-})
-tick()
-
+}
 </script>
 
 <template >

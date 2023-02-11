@@ -9,8 +9,7 @@ import Stats from 'stats.js';
 import { onBeforeUnmount, } from 'vue';
 
 import { CreateCanvas } from '@/units/CreateCanvas';
-import fox from '../../public/models/Fox/glTF-Binary/Fox.glb?url'
-
+import fox from '~/models/Fox/glTF-Binary/Fox.glb?url'
 
 const size = {
     width() { return window.innerWidth },

@@ -64,11 +64,11 @@ const router = createRouter({
       name: "models",
       component: () => import("../views/Models.vue"),
     },
-    // {
-    //   path: "/json",
-    //   name: "json",
-    //   component: () => import("../views/hide/JsonLoader.vue"),
-    // },
+    {
+      path: "/shader",
+      name: "shader",
+      component: () => import("../views/FirstShader.vue"),
+    },
   ],
 });
 
