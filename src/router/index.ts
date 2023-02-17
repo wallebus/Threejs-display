@@ -67,7 +67,7 @@ const router = createRouter({
     {
       path: "/shader",
       name: "shader",
-      component: () => import("../views/FirstShader.vue"),
+      component: () => import("../views/SecondShader.vue"),
     },
   ],
 });

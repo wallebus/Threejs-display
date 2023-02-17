@@ -163,11 +163,10 @@ function toJumpShare() {
         <label for="">{{ light.children[0].type }}</label>
         <input type="radio" name="light" :value="index" v-model="lightIndex">
     </div>
-    <div class="shadowMap">
+<!-- <div class="shadowMap">
         <label for="">shadowMap</label>
         <input type="radio" name="light" :value="3" @change="toJumpShare">
-    </div>
-</template >
+    </div> --></template >
 
 
 <style scoped>

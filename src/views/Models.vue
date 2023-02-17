@@ -10,7 +10,7 @@ import { onBeforeUnmount, } from 'vue';
 
 import { CreateCanvas } from '@/units/CreateCanvas';
 import fox from '~/models/Fox/glTF-Binary/Fox.glb?url'
-
+import fligh from '~/models/FlightHelmet/glTF/FlightHelmet.gltf?url'
 const size = {
     width() { return window.innerWidth },
     height() { return window.innerHeight * 0.8 },
@@ -49,13 +49,8 @@ gltfLoader.load(fox, (fox) => {
 })
 
 // Mesh 加载场景
-// gltfLoader.load(flightHelmet, (model) => {
-//     const children = model.scene.children
-
-//     while (children.length) {
-//         scene.add(children[0])
-//         console.log(children);
-//     }
+// gltfLoader.load(fligh, (model) => {
+//     scene.add(...model.scene.children)
 // })
 
 renderer.shadowMap.enabled = true

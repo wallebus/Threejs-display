@@ -1,16 +1,23 @@
 <script lang="ts" setup>
-import { CreateCanvas } from '@/units/CreateCanvas';
 import {
     AxesHelper,
     BufferAttribute,
     BufferGeometry,
+    Clock,
     DoubleSide,
     Mesh,
-    PerspectiveCamera, PlaneGeometry, RawShaderMaterial, Scene, WebGLRenderer
+    PerspectiveCamera, PlaneGeometry, RawShaderMaterial, Scene, ShaderMaterial, TextureLoader, Vector2, WebGLRenderer
 } from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+import GUI from 'lil-gui';
+
+import { CreateCanvas } from '@/units/CreateCanvas';
 import testVertex from '../shader/test/vertexShader.glsl?raw'
 import testFragment from '../shader/test/fragmentShader.glsl?raw'
+import flag from '~/shader/flag.jpg'
+
+const textureLoader = new TextureLoader()
+const flagTexture = textureLoader.load(flag)
 
 const size = {
     width() { return window.innerWidth },
@@ -26,30 +33,33 @@ camera.position.z = 3
 renderer.setSize(size.width(), size.height())
 renderer.setPixelRatio(Math.min(2, window.devicePixelRatio))
 
-const material = new RawShaderMaterial({
+const uniforms = {
+
+}
+
+const material = new ShaderMaterial({
     vertexShader: testVertex,
     fragmentShader: testFragment,
     side: DoubleSide,
-    transparent: true
+    transparent: true,
+    uniforms: uniforms,
 })
-const plane = new Mesh(new PlaneGeometry(2, 2, 32, 32), material)
+
+const gui = new GUI({ autoPlace: true })
+
+const plane = new Mesh(new PlaneGeometry(2, 2, 16, 16), material)
 plane.rotation.x = -Math.PI / 8
 
-const count = plane.geometry.attributes.position.count
-const randoms = new Float32Array(count)
-for (let i = 0; i < count; i++) [
-    randoms[i] = Math.random()
-]
-plane.geometry.setAttribute('mRandom', new BufferAttribute(randoms, 1))
-console.log(plane.geometry.attributes.mRandom)
-const axHelper = new AxesHelper(3)
+const clock = new Clock()
 scene.add(camera, plane)
-animate()
+tick()
 
-function animate() {
+function tick() {
+    const elapsedTime = clock.getElapsedTime();
+
     control.update()
     renderer.render(scene, camera)
-    requestAnimationFrame(animate)
+    requestAnimationFrame(tick)
 }
 
 // ———— Window adaptive ————
