@@ -30,11 +30,8 @@ import Stats from "stats.js";
 import { onBeforeUnmount } from "vue";
 
 import { CreateCanvas } from "@/units/CreateCanvas";
-import fox from "~/models/Fox/glTF-Binary/Fox.glb?url";
-import house from "~/models/model.glb?url";
 import build from "~/models/blender.glb?url";
 
-import fligh from "~/models/FlightHelmet/glTF/FlightHelmet.gltf?url";
 const size = {
   width() {
     return window.innerWidth;
