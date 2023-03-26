@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from "vue-router";
-import { toggleDark } from "./units/Dark"
+import Models from "./views/Models.vue";
+import { toggleDark } from "./units/Dark";
 // import { canvas } from "./components/canvas.vue";
 </script>
 
 <template>
-  <header>
+  <!-- <header>
     <div class="wrapper">
       <nav>
         <RouterLink to="/">Home</RouterLink>
@@ -15,15 +16,13 @@ import { toggleDark } from "./units/Dark"
         <RouterLink to="/door">Texture</RouterLink>
         <RouterLink to="/shadow">Shadow</RouterLink>
         <RouterLink to="/house">House</RouterLink>
-        <!-- <RouterLink to="/point">Particle</RouterLink> -->
         <RouterLink to="/models">Models</RouterLink>
         <RouterLink to="/shader">Shader</RouterLink>
       </nav>
     </div>
-
-    <!-- <button @click="toggleDark()">dark</button> -->
-  </header>
-  <Router-view />
+  </header> -->
+  <!-- <Router-view /> -->
+  <Models></Models>
 </template>
 
 <style scoped>

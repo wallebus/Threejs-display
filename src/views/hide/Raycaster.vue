@@ -76,7 +76,8 @@ function raycasterChange() {
     const intersects = raycaster.intersectObjects(spheres)
 
     intersects.map(intersect => {
-        // (intersect.object.material).color.set('#000fff')
+        // @ts-ignore
+        (intersect.object.material).color.set('#000fff')
 
     })
 
@@ -109,11 +110,7 @@ window.addEventListener('resize', () => {
 })
 </script>
 
-<template >
-
-</template>
+<template ></template>
 
 
-<style>
-
-</style>
+<style></style>
